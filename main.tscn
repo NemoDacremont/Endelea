@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://4tdj4shdbtft"]
+[gd_scene load_steps=4 format=3 uid="uid://4tdj4shdbtft"]
 
 [ext_resource type="FontFile" uid="uid://8h3bs8j2ghtb" path="res://assets/fonts/JimNightshade-Regular.ttf" id="1_ba1a0"]
+[ext_resource type="PackedScene" uid="uid://b57sr0tds5iub" path="res://player/player.tscn" id="2_w2cqm"]
+[ext_resource type="PackedScene" uid="uid://bppu2h75e6xkn" path="res://tmp_map.tscn" id="3_yrdep"]
 
 [node name="Main" type="Node2D"]
 
@@ -12,3 +14,8 @@ offset_bottom = 454.0
 theme_override_fonts/font = ExtResource("1_ba1a0")
 theme_override_font_sizes/font_size = 64
 text = "Hello World! Bizarre la font"
+
+[node name="Player" parent="." instance=ExtResource("2_w2cqm")]
+position = Vector2(228, 196)
+
+[node name="Node2D" parent="." instance=ExtResource("3_yrdep")]
