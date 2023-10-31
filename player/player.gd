@@ -9,6 +9,9 @@ extends CharacterBody2D
 @export var MOVE_LEFT_ACTION_NAME: String = "move_left"
 @export var JUMP_ACTION_NAME: String = "jump"
 
+const HEIGHT = 48
+const WIDTH = 48
+
 ## Input control variables
 var is_moving_right: bool = false
 var is_moving_left: bool = false
@@ -21,20 +24,40 @@ var direction: int = 1
 #
 var acceleration: Vector2 = Vector2.ZERO
 
-@export var MAX_SPEED_X: float = 200.0  # à changer
-@export var AIR_FRICTION_X: float = 10  # -> 3tau = 0.3s de régime transitoire
+## Axe x
+@export var MAX_SPEED_X: float = 4 * WIDTH  # 4 * WIDTH per second
+@export var time_full_speed = 0.1
+var AIR_FRICTION_X: float = 3 / time_full_speed
 
 var ACCEL_X: float = MAX_SPEED_X * AIR_FRICTION_X
 
-var F = 0
+## Axe y
+const MAX_HEIGHT_JUMP: float = 2 * HEIGHT
+const JUMP_DURATION: float = .65  # 1 seconde
 
-const SPEED: float = 300.0
-const JUMP_VELOCITY: float = -400.0
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+const gravity: float = 8 * MAX_HEIGHT_JUMP / (JUMP_DURATION**2)
+const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus so jump duration is .5s and max height is 3 * HEIGHT
 
 
+#
+# Animations
+#
+
+const IDLE_ANIMATION_NAME: String = "Idle"
+const WALK_ANIMATION_NAME: String = "Walk"
+const JUMP_ANIMATION_NAME: String = "Jump"
+
+const JUMP_ANIMATION_EPSILON: float = abs(JUMP_VELOCITY / 3)
+
+
+@onready var animation_node: AnimatedSprite2D = $Sprite
+var animation: String = IDLE_ANIMATION_NAME
+var animationFrame: int = 0
+
+
+#
+#  Procédure UX
+#
 func capture_inputs():
 	is_moving_right = false
 	is_moving_left = false
@@ -45,12 +68,46 @@ func capture_inputs():
 		is_moving_left = true
 
 
+
+#
+# Procédures Animations
+#
+func animation_process():
+	animation = IDLE_ANIMATION_NAME
+
+	if (is_moving_left or is_moving_right):
+		animation = WALK_ANIMATION_NAME
+
+	animation_node.flip_h = velocity.x < 0
+
+	if (not is_on_floor() && not is_on_wall()):
+		animation = JUMP_ANIMATION_NAME
+		print(abs(velocity), " ", JUMP_ANIMATION_EPSILON)
+
+		if (velocity.y < 0):
+			animationFrame = 0
+		elif (abs(velocity.y) <= JUMP_ANIMATION_EPSILON):
+			animationFrame = 1
+		elif (velocity.y > 0):
+			animationFrame = 2
+
+		animation_node.frame = animationFrame
+
+
+
+	animation_node.play(animation)
+
+
+
+#
+# Procédure physics
+#
 func _physics_process(delta: float):
 	capture_inputs()
 
 	# Add the gravity.
 	if not is_on_floor():
-		acceleration.y += gravity * delta
+		acceleration.y = gravity 
 
 
 	# Handle Jump.
@@ -79,8 +136,7 @@ func _physics_process(delta: float):
 
 
 func _process(_delta):
-	print(velocity.x)
-	print(acceleration.x)
+	animation_process()
 
 
 
