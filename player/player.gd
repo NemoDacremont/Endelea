@@ -20,7 +20,13 @@ var direction: int = 1
 # Physics
 #
 var acceleration: Vector2 = Vector2.ZERO
-@export var MAX_ACCEL_X: float = 200.0
+
+@export var MAX_SPEED_X: float = 200.0  # à changer
+@export var AIR_FRICTION_X: float = 10  # -> 3tau = 0.3s de régime transitoire
+
+var ACCEL_X: float = MAX_SPEED_X * AIR_FRICTION_X
+
+var F = 0
 
 const SPEED: float = 300.0
 const JUMP_VELOCITY: float = -400.0
@@ -30,6 +36,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func capture_inputs():
+	is_moving_right = false
+	is_moving_left = false
+
 	if Input.is_action_pressed(MOVE_RIGHT_ACTION_NAME):
 		is_moving_right = true
 	if Input.is_action_pressed(MOVE_LEFT_ACTION_NAME):
@@ -54,14 +63,24 @@ func _physics_process(delta: float):
 	elif is_moving_left:
 		direction = -1
 
+
 	if is_moving_left or is_moving_right:
-		acceleration.x = direction * MAX_ACCEL_X
+		acceleration.x = direction * ACCEL_X - AIR_FRICTION_X * velocity.x
+	else:
+		acceleration.x = - AIR_FRICTION_X * velocity.x
+	
 
 		
 	# integrate acceleration
 	velocity += delta * acceleration
 
 	move_and_slide()
+
+
+
+func _process(_delta):
+	print(velocity.x)
+	print(acceleration.x)
 
 
 
