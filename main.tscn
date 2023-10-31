@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://4tdj4shdbtft"]
+
+[ext_resource type="FontFile" uid="uid://8h3bs8j2ghtb" path="res://assets/fonts/JimNightshade-Regular.ttf" id="1_ba1a0"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 293.0
+offset_top = 152.0
+offset_right = 838.0
+offset_bottom = 454.0
+theme_override_fonts/font = ExtResource("1_ba1a0")
+theme_override_font_sizes/font_size = 64
+text = "Hello World! Bizarre la font"
