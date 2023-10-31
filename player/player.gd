@@ -82,7 +82,6 @@ func animation_process():
 
 	if (not is_on_floor() && not is_on_wall()):
 		animation = JUMP_ANIMATION_NAME
-		print(abs(velocity), " ", JUMP_ANIMATION_EPSILON)
 
 		if (velocity.y < 0):
 			animationFrame = 0
