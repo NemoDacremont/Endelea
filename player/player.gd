@@ -42,7 +42,6 @@ const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus s
 #
 # Animations
 #
-
 const IDLE_ANIMATION_NAME: String = "Idle"
 const WALK_ANIMATION_NAME: String = "Walk"
 const JUMP_ANIMATION_NAME: String = "Jump"
