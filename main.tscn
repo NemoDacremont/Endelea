@@ -18,4 +18,4 @@ text = "Hello World! Bizarre la font"
 [node name="Player" parent="." instance=ExtResource("2_w2cqm")]
 position = Vector2(228, 196)
 
-[node name="Node2D" parent="." instance=ExtResource("3_yrdep")]
+[node name="Map" parent="." instance=ExtResource("3_yrdep")]

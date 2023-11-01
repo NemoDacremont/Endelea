@@ -9,7 +9,7 @@ extends CharacterBody2D
 @export var MOVE_LEFT_ACTION_NAME: String = "move_left"
 @export var JUMP_ACTION_NAME: String = "jump"
 
-const COYOTE_JUMP_DURATION: float = 0.15
+const COYOTE_JUMP_DURATION: float = .5
 @onready var coyote_jump_timer: Timer = $CoyoteJumpTimer
 var is_coyote_jump_available: bool = false
 var has_just_left_floor: bool = false
@@ -23,22 +23,16 @@ const WIDTH = 48
 var is_moving_right: bool = false
 var is_moving_left: bool = false
 
-## Super Actions
-enum Super_Actions {JUMP_SUPER_ACTION}
-const super_action_names = ["jump"]
-
+## direction = 1 if moving right, -1 if moving left
+var direction: int = 1
 
 #
 # Physics
 #
 var acceleration: Vector2 = Vector2.ZERO
 
-## direction = 1 if moving right, -1 if moving left
-var direction: int = 1
-
-
 ## Axe x
-@export var MAX_SPEED_X: float = 3 * WIDTH  # 4 * WIDTH per second
+@export var MAX_SPEED_X: float = 4 * WIDTH  # 4 * WIDTH per second
 @export var time_full_speed = 0.1
 var AIR_FRICTION_X: float = 3 / time_full_speed
 
@@ -74,7 +68,7 @@ func capture_inputs():
 	is_moving_right = false
 	is_moving_left = false
 
-	if not has_just_left_floor && (not is_on_floor() and not is_on_wall()):
+	if not has_left_floor && (not is_on_floor() or not is_on_wall()):
 		has_just_left_floor = true
 		is_coyote_jump_available = true
 		coyote_jump_timer.start(COYOTE_JUMP_DURATION)
@@ -123,18 +117,6 @@ func animation_process():
 	animation_node.play(animation)
 
 
-#
-# Super Actions Handling
-#
-func super_action_physics_process(action: Super_Actions, _delta: float):
-
-	match (action):
-		Super_Actions.JUMP_SUPER_ACTION:
-
-			print("Super Action: ", super_action_names[Super_Actions.JUMP_SUPER_ACTION])
-
-	pass
-
 
 #
 # Procédure physics
@@ -148,7 +130,7 @@ func _physics_process(delta: float):
 
 
 	# Handle Jump.
-	if Input.is_action_just_pressed(JUMP_ACTION_NAME) and (is_on_floor() or is_coyote_jump_available):
+	if Input.is_action_just_pressed(JUMP_ACTION_NAME) and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 
@@ -178,5 +160,6 @@ func _process(_delta):
 
 func _on_coyote_jump_timer_timeout():
 	is_coyote_jump_available = false
+
 
 

@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://fyw40thmja6f" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/player land 48x48.png" id="4_icqfs"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
-height = 32.0
+custom_solver_bias = 0.5
+radius = 9.0
+height = 34.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pvhnt"]
 atlas = ExtResource("1_jkixk")
@@ -243,6 +245,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(24, 6)
 script = ExtResource("1_gocl4")
 metadata/_edit_group_ = true
 
@@ -251,7 +254,18 @@ shape = SubResource("CapsuleShape2D_al143")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Land"
+animation = &"Idle"
 autoplay = "Idle"
-frame = 7
-frame_progress = 0.632508
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="Timer" type="Timer" parent="Camera2D"]
+
+[connection signal="timeout" from="CoyoteJumpTimer" to="." method="_on_coyote_jump_timer_timeout"]
