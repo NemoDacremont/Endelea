@@ -77,7 +77,10 @@ func animation_process():
 	if (is_moving_left or is_moving_right):
 		animation = WALK_ANIMATION_NAME
 
-	animation_node.flip_h = velocity.x < 0
+	if (is_moving_right):
+		animation_node.flip_h = false
+	elif (is_moving_left):
+		animation_node.flip_h = true
 
 	if (not is_on_floor() && not is_on_wall()):
 		animation = JUMP_ANIMATION_NAME
