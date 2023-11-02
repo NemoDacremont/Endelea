@@ -257,7 +257,7 @@ shape = SubResource("CapsuleShape2D_al143")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Air_spin"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]

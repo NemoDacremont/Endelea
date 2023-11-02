@@ -9,7 +9,7 @@ extends CharacterBody2D
 @export var MOVE_LEFT_ACTION_NAME: String = "move_left"
 @export var JUMP_ACTION_NAME: String = "jump"
 
-const COYOTE_JUMP_DURATION: float = 0.15
+const COYOTE_JUMP_DURATION: float = 0.1
 @onready var coyote_jump_timer: Timer = $CoyoteJumpTimer
 var is_coyote_jump_available: bool = false
 var has_just_left_floor: bool = false
@@ -24,12 +24,15 @@ var is_moving_left: bool = false
 #
 # Super Actions
 #
-enum Super_Actions {JUMP_SUPER_ACTION, PRE_JUMP, IS_JUMPING, NO_SUPER_ACTION}
-const super_action_names: Array[String] = ["Jump", "Pre jump", "Is jumping", "No supper action"]
-const SUPER_ACTION_BUFFER_TIMER_DURATION: float = 0.2
+# Definition
+enum Super_Actions {JUMP_SUPER_ACTION, PRE_JUMP, IS_PRE_JUMPING, IS_JUMPING, NO_SUPER_ACTION}
+const super_action_names: Array[String] = ["Jump", "Pre jump", "Is pre jumping", "Is jumping", "No supper action"]
 
+# Jump and Pre Jump
 const PRE_JUMP_DURATION: float = 0.025  # in sec
 const PRE_JUMP_VELOCITY_MULTIPLIER: float = 0.5
+
+# A bit dirty way to handle things i think, im lazy
 const PRE_JUMP_PART1_DURATION: float = PRE_JUMP_DURATION / 2
 const PRE_JUMP_PART2_DURATION: float = PRE_JUMP_DURATION / 2
 
@@ -39,11 +42,14 @@ var pre_jump_part2_time: float = 0
 var pre_jump_part: int = 0  # 0 indexed
 var pre_jump_part_count: int = 2
 
+# never used lol
 var is_jump_available: bool = true
+
 
 var next_action: Super_Actions = Super_Actions.NO_SUPER_ACTION
 var super_action_buffer: Super_Actions = Super_Actions.NO_SUPER_ACTION
 
+const SUPER_ACTION_BUFFER_TIMER_DURATION: float = 0.2
 @onready var super_action_buffer_timer: Timer = $SuperActionBufferTimer
 
 
@@ -118,31 +124,38 @@ func capture_inputs():
 # Procédures Animations
 #
 func animation_process(delta):
-
-	animation = IDLE_ANIMATION_NAME
+	animation = IDLE_ANIMATION_NAME  # Default animation
+	animationFrame = animation_node.frame  # Modify it after if necessary
 
 	if (is_moving_left or is_moving_right):
 		animation = WALK_ANIMATION_NAME
 
+	# Flip according to the direction the player is going
 	if (is_moving_right):
 		animation_node.flip_h = false
+
 	elif (is_moving_left):
 		animation_node.flip_h = true
 
+	# If is jumping or is falling, use JUMP_ANIMATION according to the speed
 	if (not is_on_floor() && not is_on_wall()):
 		animation = JUMP_ANIMATION_NAME
 
 		if (velocity.y < 0):
 			animationFrame = 0
+
+		# if velocity is slow, use special frame
 		elif (abs(velocity.y) <= JUMP_ANIMATION_EPSILON):
 			animationFrame = 1
+
 		elif (velocity.y > 0):
 			animationFrame = 2
 
-		animation_node.frame = animationFrame
 
+		animation_node.frame = animationFrame
 	animation_node.play(animation)
 
+	# super_action_animations_process overrides others if needed
 	super_action_animations_process(delta)
 
 
@@ -150,32 +163,34 @@ func animation_process(delta):
 # Super Actions Handling
 #
 
+# Take the buffered action to the next action
 func get_next_action():
 	next_action = super_action_buffer
 	super_action_buffer = Super_Actions.NO_SUPER_ACTION
 
 
-func super_action_capture_inputs():
+# Buffer the Super_Actions action
+func buffer_super_action(action: Super_Actions):
+	print("Buffer ", action)
+	super_action_buffer = action
+	super_action_buffer_timer.start(SUPER_ACTION_BUFFER_TIMER_DURATION)
+
+
+# Handles inputs related to Super_Actions (ex: jump, dash..)
+func super_action_capture_inputs(): 
 	if (Input.is_action_just_pressed(JUMP_ACTION_NAME)):
-		if (is_on_floor() or is_coyote_jump_available):
-			print("Pre jump input")
-			if (next_action == Super_Actions.NO_SUPER_ACTION):
-				print("Pre jump next action")
-				next_action = Super_Actions.PRE_JUMP
-			else:
-				print("Pre jump buffered")
-				super_action_buffer = Super_Actions.PRE_JUMP
-				super_action_buffer_timer.start(SUPER_ACTION_BUFFER_TIMER_DURATION)
-
+		# If no super actions are going, directly add
+		if (next_action == Super_Actions.NO_SUPER_ACTION):
+			next_action = Super_Actions.PRE_JUMP
 		else:
-			get_next_action()
+			buffer_super_action(Super_Actions.PRE_JUMP)
 
 
+# Handles special animations for Super_Actions, if no needs, just pass
 func super_action_animations_process(delta):
-	if (next_action == Super_Actions.PRE_JUMP):
+	if (next_action == Super_Actions.PRE_JUMP or next_action == Super_Actions.IS_PRE_JUMPING):
 		match (pre_jump_part):
-			0:
-				print("Pre jump part 1")
+			0:  # First part: lower his body
 				animation_node.frame = 1
 				animation_node.play(LAND_ANIMATION_NAME)
 				pre_jump_part1_time += delta
@@ -185,8 +200,7 @@ func super_action_animations_process(delta):
 					pre_jump_part1_time = 0
 
 
-			1:
-				print("Pre jump part 2")
+			1:  # Second part: Crouches before jump
 				animation_node.frame = 0
 				animation_node.play(LAND_ANIMATION_NAME)
 				pre_jump_part2_time += delta
@@ -205,18 +219,31 @@ func super_action_animations_process(delta):
 func super_action_physics_process(_delta: float):
 	match (next_action):
 		Super_Actions.PRE_JUMP:
+			# Tests if can jump, get to the buffer if can't
+			if (is_on_floor() or is_coyote_jump_available):
+				tmp_velocity = velocity
+				velocity = PRE_JUMP_VELOCITY_MULTIPLIER * tmp_velocity
+				next_action = Super_Actions.IS_PRE_JUMPING
+
+			else:
+				get_next_action()
+
+
+		# Keeps the slow down while pre jumping
+		Super_Actions.IS_PRE_JUMPING:
 			tmp_velocity = velocity
 			velocity = PRE_JUMP_VELOCITY_MULTIPLIER * tmp_velocity
 
 
-
+		# Actual jump
 		Super_Actions.JUMP_SUPER_ACTION:
-			print("Super Action: ", super_action_names[Super_Actions.JUMP_SUPER_ACTION])
 			velocity.y = JUMP_VELOCITY
 			next_action = Super_Actions.IS_JUMPING
 
+
+		# Detects when jump ends
 		Super_Actions.IS_JUMPING:
-			if (is_on_floor()):
+			if (is_on_floor() or is_on_wall()):
 				get_next_action()
 
 
@@ -227,23 +254,27 @@ func super_action_physics_process(_delta: float):
 func _physics_process(delta: float):
 	capture_inputs()
 
+	# tmp_velocity can be used in super_actions or other to make temporary changes
+	# on velocity
 	if (tmp_velocity != Vector2.ZERO):
 		velocity = tmp_velocity
 		tmp_velocity = Vector2.ZERO
 
-	# Add the gravity.
+
+	# Add the gravity if needed
 	if not is_on_floor():
 		acceleration.y = gravity 
 
-
+	# Indicates the sign of player's input force
 	if is_moving_right:
 		direction = 1
 	elif is_moving_left:
 		direction = -1
 
-
+	# Apply the player's input force if needed
 	if is_moving_left or is_moving_right:
 		acceleration.x = direction * ACCEL_X - AIR_FRICTION_X * velocity.x
+
 	else:
 		acceleration.x = - AIR_FRICTION_X * velocity.x
 		
@@ -251,7 +282,7 @@ func _physics_process(delta: float):
 	# integrate acceleration
 	velocity += delta * acceleration
 
-	super_action_physics_process(delta)
+	super_action_physics_process(delta)  # Can override modifications
 
 	move_and_slide()
 
@@ -261,11 +292,14 @@ func _process(delta):
 	animation_process(delta)
 
 
+# make coyote unavailable (surpising)
 func _on_coyote_jump_timer_timeout():
 	is_coyote_jump_available = false
 
 
+# Clears the Super_Actions buffer
 func _on_super_action_buffer_timer_timeout():
+	print("Clear super action buffer")
 	super_action_buffer = Super_Actions.NO_SUPER_ACTION
 
 
