@@ -11,6 +11,7 @@ Projet de Game Jam pour GCC, ça sera un platformer, mais c'est tout ce qu'on sa
 
  - Nemo D'ACREMONT (I1)
  - Thomas Horrut (I1)
+ - Thomas Wanchai Menier (I1)
 
 
 # Convention (copie du fichier convention.md)
