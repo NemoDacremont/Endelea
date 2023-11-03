@@ -22,11 +22,14 @@ Projet de Game Jam pour GCC, ça sera un platformer, mais c'est tout ce qu'on sa
 
 ## Variables
 Différentes règles:
+
 - Constantes: ALL\_CAPS
 - Variables: snake\_case
 - classe: UpperCamelCase
 - node godot: Pascal\_Snake\_Case
+
 Lorsque créé une variable, toujours indiquer le type:
+
 ### Quelques exemples:
 ```gd
 const TIMER_DURATION: float = 0.3 
