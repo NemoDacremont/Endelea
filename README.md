@@ -1,6 +1,7 @@
 
 # Projet Game Jam
 
+Projet de Game Jam pour GCC, ça sera un platformer, mais c'est tout ce qu'on sait pour l'instant
 
 # Équipe
  - Nemo D'ACREMONT (I1)
