@@ -346,7 +346,7 @@ shape = SubResource("CapsuleShape2D_al143")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Wall_Slide"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
@@ -360,5 +360,10 @@ position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
+[node name="WallJumpTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
 [connection signal="timeout" from="SuperActionBufferTimer" to="." method="_on_super_action_buffer_timer_timeout"]
 [connection signal="timeout" from="CoyoteJumpTimer" to="." method="_on_coyote_jump_timer_timeout"]
+[connection signal="timeout" from="WallJumpTimer" to="." method="_on_wall_jump_timer_timeout"]

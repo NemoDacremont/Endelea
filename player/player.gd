@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+const WALL_JUMP_DURATION: float = .1  # s
+var block_basic_input: bool = false
+@onready var wall_jump_timer: Timer = $WallJumpTimer
+var is_wall_jumping: bool = false
+
 #
 # Inputs
 #
@@ -111,6 +116,7 @@ var was_on_wall: bool = false
 @export var MAX_SPEED_X: float = 3 * WIDTH  # 4 * WIDTH per second
 @export var time_full_speed: float = 0.1
 var AIR_FRICTION_X: float = 3 / time_full_speed
+var air_friction_x: float = AIR_FRICTION_X
 
 var ACCEL_X: float = MAX_SPEED_X * AIR_FRICTION_X
 
@@ -124,6 +130,9 @@ const gravity: float = 8 * MAX_HEIGHT_JUMP / (JUMP_DURATION**2)
 const MAX_FALL_SPEED: float = 8 * HEIGHT  # 8 par seconde
 const wall_slide_friction: float = - gravity / 2
 const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus so jump duration is .5s and max height is 3 * HEIGHT
+
+var wall_jump_direction: Vector2 = Vector2.ZERO
+var d: int = 1
 
 
 #
@@ -162,10 +171,14 @@ func capture_inputs():
 		has_just_left_floor = false
 
 
-	if Input.is_action_pressed(MOVE_RIGHT_ACTION_NAME):
-		is_moving_right = true
-	if Input.is_action_pressed(MOVE_LEFT_ACTION_NAME):
-		is_moving_left = true
+	if (not block_basic_input):
+		if Input.is_action_pressed(MOVE_RIGHT_ACTION_NAME):
+			is_moving_right = true
+		if Input.is_action_pressed(MOVE_LEFT_ACTION_NAME):
+			is_moving_left = true
+
+	if (Input.is_action_pressed("reset_position")):
+		position = Vector2.ZERO
 
 	super_action_capture_inputs()
 
@@ -245,9 +258,7 @@ func super_action_capture_inputs():
 
 	if (Input.is_action_just_pressed(DASH_ACTION_NAME)):
 		# If no super actions are going, directly add
-		print("Input dash !")
 		if (dash_counter >= MAX_DASH_COUNTER):
-			print("Can't dash more")
 			return
 
 		next_action = Super_Actions.PRE_DASH
@@ -276,7 +287,7 @@ func super_action_capture_inputs():
 # Handles special animations for Super_Actions, if no needs, just pass
 func super_action_animations_process(delta):
 	if (next_action == Super_Actions.PRE_JUMP or next_action == Super_Actions.IS_PRE_JUMPING):
-		if (is_on_floor() or is_coyote_jump_available):
+		if (is_on_floor() or is_on_wall() or is_coyote_jump_available):
 			match (pre_jump_part):
 				0:  # First part: lower his body
 					animation_node.frame = 1
@@ -317,7 +328,7 @@ func super_action_physics_process(_delta: float):
 	match (next_action):
 		Super_Actions.PRE_JUMP:
 			# Tests if can jump, get to the buffer if can't
-			if (is_on_floor() or is_coyote_jump_available):
+			if (is_on_floor() or is_on_wall() or is_coyote_jump_available):
 				tmp_velocity = velocity
 				velocity = PRE_JUMP_VELOCITY_MULTIPLIER * tmp_velocity
 				next_action = Super_Actions.IS_PRE_JUMPING
@@ -334,7 +345,26 @@ func super_action_physics_process(_delta: float):
 
 		# Actual jump
 		Super_Actions.JUMP_SUPER_ACTION:
-			velocity.y = JUMP_VELOCITY
+			if (is_on_wall_only()):
+				if (is_moving_right):
+					d = 1
+				elif (is_moving_left):
+					d = -1
+
+
+				wall_jump_direction = Vector2.ZERO
+				wall_jump_direction.x = direction
+				wall_jump_direction.y = 2
+				wall_jump_direction = wall_jump_direction.normalized()
+
+				velocity = JUMP_VELOCITY * wall_jump_direction
+				is_wall_jumping = true
+				block_basic_input = true
+
+				wall_jump_timer.start(WALL_JUMP_DURATION)
+
+			else:
+				velocity.y = JUMP_VELOCITY
 
 			next_action = Super_Actions.IS_JUMPING
 
@@ -343,6 +373,8 @@ func super_action_physics_process(_delta: float):
 		Super_Actions.IS_JUMPING:
 			if (is_on_floor() or is_on_wall()):
 				get_next_action()
+				is_wall_jumping = false
+				block_basic_input = false
 
 
 		Super_Actions.PRE_DASH:
@@ -354,9 +386,6 @@ func super_action_physics_process(_delta: float):
 			acceleration.y = 0
 			acceleration.x = 0
 			dash_time += _delta
-
-			print(dash_direction)
-			print(dash_time)
 
 			velocity = dash_direction * DASH_SPEED
 
@@ -383,7 +412,6 @@ func _physics_process(delta: float):
 
 	if (is_on_wall() or is_on_floor()):
 		if (next_action != Super_Actions.PRE_DASH and next_action != Super_Actions.DASH):
-			# print(super_action_names[next_action])
 			dash_counter = 0
 
 
@@ -402,11 +430,15 @@ func _physics_process(delta: float):
 		direction = -1
 
 	# Apply the player's input force if needed
+	air_friction_x = AIR_FRICTION_X
+	if (is_wall_jumping):
+		air_friction_x = 0
+
 	if is_moving_left or is_moving_right:
-		acceleration.x = direction * ACCEL_X - AIR_FRICTION_X * velocity.x
+		acceleration.x = direction * ACCEL_X - air_friction_x * velocity.x
 
 	else:
-		acceleration.x = - AIR_FRICTION_X * velocity.x
+		acceleration.x = - air_friction_x * velocity.x
 
 	
 	if (is_on_wall_only()):
@@ -414,7 +446,8 @@ func _physics_process(delta: float):
 			velocity.y /= 2
 			was_on_wall = true
 
-		acceleration.y = gravity + wall_slide_friction
+		if (velocity.y > 0):
+			acceleration.y = gravity + wall_slide_friction
 
 
 	if (not is_on_wall()):
@@ -443,5 +476,12 @@ func _on_coyote_jump_timer_timeout():
 # Clears the Super_Actions buffer
 func _on_super_action_buffer_timer_timeout():
 	super_action_buffer = Super_Actions.NO_SUPER_ACTION
+
+
+func _on_wall_jump_timer_timeout():
+	is_wall_jumping = false
+	block_basic_input = false
+	
+
 
 
