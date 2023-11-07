@@ -12,6 +12,7 @@ func _ready():
 	var random_angle = random.randf()*2*PI;
 	oscillation_direction = Vector2(cos(random_angle), sin(random_angle));
 	var speed = random.randf()*10;
+	t = random.randf()*2*PI;
 	print(speed/10);
 	print(random_angle/2/PI);
 
