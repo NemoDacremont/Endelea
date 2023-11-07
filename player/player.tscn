@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=55 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Texture2D" uid="uid://cl4qaiwfrfnkh" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/Character Idle 48x48.png" id="1_jkixk"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://fyw40thmja6f" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/player land 48x48.png" id="4_icqfs"]
 [ext_resource type="Texture2D" uid="uid://b40po52fa84yr" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/run cycle 48x48.png" id="6_ovfpc"]
 [ext_resource type="Texture2D" uid="uid://su6pef4tiptd" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/Wall Slide 48x48.png" id="7_0j5nc"]
+[ext_resource type="Script" path="res://player/StateMachine.gd" id="9_4qcd0"]
+[ext_resource type="Script" path="res://player/Jump.gd" id="9_pdr8x"]
+[ext_resource type="Script" path="res://player/Idle.gd" id="11_y5m27"]
+[ext_resource type="Script" path="res://player/Dash.gd" id="12_niwyj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
 custom_solver_bias = 1.0
@@ -363,6 +367,18 @@ drag_vertical_enabled = true
 [node name="WallJumpTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("9_4qcd0")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("9_pdr8x")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("11_y5m27")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("12_niwyj")
 
 [connection signal="timeout" from="SuperActionBufferTimer" to="." method="_on_super_action_buffer_timer_timeout"]
 [connection signal="timeout" from="CoyoteJumpTimer" to="." method="_on_coyote_jump_timer_timeout"]
