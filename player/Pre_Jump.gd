@@ -1,6 +1,20 @@
 extends Node
 
+const PRE_JUMP_DURATION: float = 0.025  # in sec
+const PRE_JUMP_VELOCITY_MULTIPLIER: float = 0.25
 
+# A bit dirty way to handle things i think, im lazy
+const PRE_JUMP_PART1_DURATION: float = PRE_JUMP_DURATION / 2
+const PRE_JUMP_PART2_DURATION: float = PRE_JUMP_DURATION / 2
+
+var pre_jump_part1_time: float = 0
+var pre_jump_part2_time: float = 0
+
+var pre_jump_part: int = 0  # 0 indexed
+var pre_jump_part_count: int = 2
+
+
+# Copy pasted from idle
 static var is_moving_right: bool = false
 static var is_moving_left: bool = false
 
@@ -13,20 +27,9 @@ static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DO
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
 
-func capture_inputs():
-	is_moving_right = false
-	is_moving_left = false
-
-	if (Input.is_action_pressed(PlayerConstants.MOVE_RIGHT_ACTION_NAME)):
-		is_moving_right = true
-
-	elif (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
-		is_moving_left = true
-
 
 func physics_process(delta: float, player: CharacterBody2D):
-	capture_inputs()
-
+	# Almost entirely copy paster from idle (just slowed)
 	# Update run force direction
 	movement_direction = 0
 
@@ -61,7 +64,11 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D):
+func process(_delta: float, _player: CharacterBody2D, _idle: Node):
 	pass
+
+
+
+
 
 

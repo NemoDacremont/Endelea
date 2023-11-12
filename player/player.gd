@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var state_machine: Node = $StateMachine
+
 const WALL_JUMP_DURATION: float = .1  # s
 var block_basic_input: bool = false
 @onready var wall_jump_timer: Timer = $WallJumpTimer
@@ -428,6 +430,78 @@ func _physics_process(delta: float):
 		direction = 1
 	elif is_moving_left:
 		direction = -1
+	state_machine.physics_process(delta)
+	# capture_inputs()
+	#
+	# # tmp_velocity can be used in super_actions or other to make temporary changes
+	# # on velocity
+	# if (tmp_velocity != Vector2.ZERO):
+	# 	velocity = tmp_velocity
+	# 	tmp_velocity = Vector2.ZERO
+	#
+	#
+	# if (is_on_wall() or is_on_floor()):
+	# 	if (next_action != Super_Actions.PRE_DASH and next_action != Super_Actions.DASH):
+	# 		dash_counter = 0
+	#
+	#
+	# # Add the gravity if needed
+	# if not is_on_floor():
+	# 	acceleration.y = gravity
+	#
+	# 	if (velocity.y > 0):
+	# 		acceleration.y = gravity * FALLING_GRAVITY_MULTIPLIER
+	#
+	#
+	# # Indicates the sign of player's input force
+	# if is_moving_right:
+	# 	direction = 1
+	# elif is_moving_left:
+	# 	direction = -1
+	#
+	# # Apply the player's input force if needed
+	# air_friction_x = AIR_FRICTION_X
+	# if (is_wall_jumping):
+	# 	air_friction_x = 0
+	#
+	# if is_moving_left or is_moving_right:
+	# 	acceleration.x = direction * ACCEL_X - air_friction_x * velocity.x
+	#
+	# else:
+	# 	acceleration.x = - air_friction_x * velocity.x
+	#
+	# 
+	# if (is_on_wall_only()):
+	# 	if (not was_on_wall):
+	# 		velocity.y /= 2
+	# 		was_on_wall = true
+	#
+	# 	if (velocity.y > 0):
+	# 		acceleration.y = gravity + wall_slide_friction
+	#
+	#
+	# if (not is_on_wall()):
+	# 	was_on_wall = false
+	#
+	# 	
+	# velocity.y = min(velocity.y, MAX_FALL_SPEED)  # Cap falling speed
+	# super_action_physics_process(delta)  # Can override modifications
+	#
+	# # integrate acceleration
+	# velocity += delta * acceleration
+	#
+	# move_and_slide()
+
+
+
+func _process(delta):
+	animation_process(delta)
+	state_machine.process(delta)
+
+
+# make coyote unavailable (surpising)
+func _on_coyote_jump_timer_timeout():
+	is_coyote_jump_available = false
 
 	# Apply the player's input force if needed
 	air_friction_x = AIR_FRICTION_X
@@ -440,38 +514,6 @@ func _physics_process(delta: float):
 	else:
 		acceleration.x = - air_friction_x * velocity.x
 
-	
-	if (is_on_wall_only()):
-		if (not was_on_wall):
-			velocity.y /= 2
-			was_on_wall = true
-
-		if (velocity.y > 0):
-			acceleration.y = gravity + wall_slide_friction
-
-
-	if (not is_on_wall()):
-		was_on_wall = false
-
-		
-	velocity.y = min(velocity.y, MAX_FALL_SPEED)  # Cap falling speed
-	super_action_physics_process(delta)  # Can override modifications
-
-	# integrate acceleration
-	velocity += delta * acceleration
-
-	move_and_slide()
-
-
-
-func _process(delta):
-	animation_process(delta)
-
-
-# make coyote unavailable (surpising)
-func _on_coyote_jump_timer_timeout():
-	is_coyote_jump_available = false
-
 
 # Clears the Super_Actions buffer
 func _on_super_action_buffer_timer_timeout():
@@ -481,7 +523,27 @@ func _on_super_action_buffer_timer_timeout():
 func _on_wall_jump_timer_timeout():
 	is_wall_jumping = false
 	block_basic_input = false
-	
 
+
+
+# func _process(delta):
+# 	animation_process(delta)
+
+
+# make coyote unavailable (surpising)
+# func _on_coyote_jump_timer_timeout():
+# 	is_coyote_jump_available = false
+#
+#
+# # Clears the Super_Actions buffer
+# func _on_super_action_buffer_timer_timeout():
+# 	super_action_buffer = Super_Actions.NO_SUPER_ACTION
+#
+#
+# func _on_wall_jump_timer_timeout():
+# 	is_wall_jumping = false
+# 	block_basic_input = false
+# 	
+#
 
 
