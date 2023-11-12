@@ -29,13 +29,44 @@ const MAX_FALL_SPEED: float = 8 * HEIGHT  # 8 par seconde
 const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus so jump duration is .5s and max height is 3 * HEIGHT
 
 # Jump
+## PreJump
+const PRE_JUMP_DURATION: float = 0.025  # in sec
+const PRE_JUMP_VELOCITY_MULTIPLIER: float = 0.25
+
+# A bit dirty way to handle things i think, im lazy
+const PRE_JUMP_PART1_DURATION: float = PRE_JUMP_DURATION / 2
+const PRE_JUMP_PART2_DURATION: float = PRE_JUMP_DURATION / 2
+
+
+
+## Jumping
 const MAX_HEIGHT_JUMP: float = 2 * HEIGHT
 const JUMP_DURATION: float = .65  # 1 seconde
 
 
 # Dash
+## PreDash
+const PRE_DASH_VELOCITY_MULTIPLIER: float = .1
+const PRE_DASH_DURATION: float = .1
 
-# Run
+
+## Dashing
+const DASH_LENGTH: float = 2 * WIDTH
+const DASH_DURATION: float = .15
+const DASH_SPEED: float = DASH_LENGTH / DASH_DURATION
+
+const MAX_DASH_COUNTER: int = 1
+
+
+# Wall Jump
+## PreWallJump
+const PRE_WALL_JUMP_DURATION: float = 0.025  # in sec
+const PRE_WALL_JUMP_VELOCITY_MULTIPLIER: float = 0.25
+
+# A bit dirty way to handle things i think, im lazy
+
+# Idle
+## Run
 
 const MAX_SPEED_X: float = 3 * WIDTH 
 const TIME_BEFORE_FULL_SPEED: float = 0.1

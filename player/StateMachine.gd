@@ -8,7 +8,7 @@ extends Node
 
 @onready var dash = $Dash
 @onready var jump = $Jump
-@onready var wall_jump= $Wall_Jump
+@onready var wall_jump= $WallJump
 @onready var idle = $Idle
 
 enum States {
@@ -31,16 +31,34 @@ var state: States = States.IDLE
 #
 #  Functions
 #
+func capture_inputs():
+	if (dash.is_triggered()):
+		dash.start()
+		state = States.DASH
+	
+	elif (jump.is_triggered(player)):
+		jump.start(player)
+		state = States.JUMP
+
+	elif (wall_jump.is_triggered(player)):
+		wall_jump.start(player)
+		state = States.WALL_JUMP
+
+
+
 
 func physics_process(delta):
+	capture_inputs()
+
 	match (state):
 		States.DASH:
-			pass
+			dash.physics_process(delta, player)
 
 		States.JUMP:
-			jump.physics_process()
+			jump.physics_process(delta, player)
 
 		States.WALL_JUMP:
+			wall_jump.physics_process(delta, player)
 			pass
 
 		States.IDLE:
@@ -48,15 +66,21 @@ func physics_process(delta):
 
 
 func process(delta):
+	print(STATES_NAME[state])
+
 	match (state):
 		States.DASH:
-			pass
+			dash.process(delta, player)
 
 		States.JUMP:
-			jump.process()
+			jump.process(delta, player)
 
 		States.WALL_JUMP:
+			wall_jump.process(delta, player)
 			pass
 
 		States.IDLE:
 			idle.process(delta, player)
+
+
+

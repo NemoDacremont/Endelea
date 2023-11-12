@@ -1,8 +1,13 @@
 extends Node
 
 
+
 @onready var jump = get_parent()
-@onready var player_node = jump.get_parent().get_parent()
+
+static var pre_jump_time: float = 0
+
+var pre_jump_part: int = 0  # 0 indexed
+var pre_jump_part_count: int = 2
 
 
 # Copy pasted from idle
@@ -17,29 +22,17 @@ static var air_friction_force: Vector2 = Vector2.ZERO
 static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
-
-func capture_inputs():
-	is_moving_right = false
-	is_moving_left = false
-
-	if (Input.is_action_pressed(PlayerConstants.MOVE_RIGHT_ACTION_NAME)):
-		is_moving_right = true
-
-	elif (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
-		is_moving_left = true
-
-
-
-func start():
-	player_node.velocity.y = PlayerConstants.JUMP_VELOCITY
+static var tmp_velocity: Vector2 = Vector2.ZERO
 
 
 
 func physics_process(delta: float, player: CharacterBody2D):
-	capture_inputs()
-
-
 	player.acceleration = Vector2.ZERO
+	
+	if tmp_velocity != Vector2.ZERO:
+		player.velocity = tmp_velocity
+
+
 	# Almost entirely copy paster from idle (just slowed)
 	# Update run force direction
 	movement_direction = 0
@@ -59,23 +52,27 @@ func physics_process(delta: float, player: CharacterBody2D):
 		gravity_force *= PlayerConstants.FALLING_GRAVITY_MULTIPLIER
 
 
-	print(gravity_force)
 	# Update accel
 	player.acceleration = run_force + air_friction_force
 	if (not player.is_on_floor()):
 		player.acceleration += gravity_force
 
 
-
 	# Integrate
 	player.velocity += player.acceleration * delta
+
 	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
 
+	tmp_velocity = player.velocity
+	player.velocity *= PlayerConstants.PRE_WALL_JUMP_VELOCITY_MULTIPLIER
 
 	# godot doing godot thigns
 	player.move_and_slide()
 
-	if (player.is_on_floor() or player.is_on_wall()):
+	pre_jump_time += delta
+	print("Prejump time: ",	pre_jump_time, " / ", PlayerConstants.PRE_WALL_JUMP_DURATION)
+	if (pre_jump_time >= PlayerConstants.PRE_WALL_JUMP_DURATION):
+		pre_jump_time = 0
 		jump.get_to_next_state()
 
 

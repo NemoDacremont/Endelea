@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=63 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Texture2D" uid="uid://cl4qaiwfrfnkh" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/Character Idle 48x48.png" id="1_jkixk"]
@@ -15,6 +15,11 @@
 [ext_resource type="Script" path="res://player/Jumping.gd" id="12_bja5w"]
 [ext_resource type="Script" path="res://player/Dash.gd" id="12_niwyj"]
 [ext_resource type="Script" path="res://player/Constants.gd" id="13_blxh5"]
+[ext_resource type="Script" path="res://player/PreDash.gd" id="15_kv6hf"]
+[ext_resource type="Script" path="res://player/Dashing.gd" id="16_y1wo4"]
+[ext_resource type="Script" path="res://player/WallJump.gd" id="17_igdat"]
+[ext_resource type="Script" path="res://player/PreWallJump.gd" id="18_j53ga"]
+[ext_resource type="Script" path="res://player/WallJumping.gd" id="19_ioofa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
 custom_solver_bias = 1.0
@@ -389,7 +394,23 @@ script = ExtResource("11_y5m27")
 [node name="Dash" type="Node" parent="StateMachine"]
 script = ExtResource("12_niwyj")
 
-[node name="Wall_Jump" type="Node" parent="StateMachine"]
+[node name="PreDash" type="Node" parent="StateMachine/Dash"]
+script = ExtResource("15_kv6hf")
+
+[node name="Dashing" type="Node" parent="StateMachine/Dash"]
+script = ExtResource("16_y1wo4")
+
+[node name="WallJump" type="Node" parent="StateMachine"]
+script = ExtResource("17_igdat")
+
+[node name="PreWallJump" type="Node" parent="StateMachine/WallJump"]
+script = ExtResource("18_j53ga")
+
+[node name="WallJumping" type="Node" parent="StateMachine/WallJump"]
+script = ExtResource("19_ioofa")
+
+[node name="WallJumpTimer" type="Timer" parent="StateMachine/WallJump"]
+wait_time = 0.1
 
 [node name="PlayerConstants" type="Node" parent="."]
 script = ExtResource("13_blxh5")
@@ -397,3 +418,4 @@ script = ExtResource("13_blxh5")
 [connection signal="timeout" from="SuperActionBufferTimer" to="." method="_on_super_action_buffer_timer_timeout"]
 [connection signal="timeout" from="CoyoteJumpTimer" to="." method="_on_coyote_jump_timer_timeout"]
 [connection signal="timeout" from="WallJumpTimer" to="." method="_on_wall_jump_timer_timeout"]
+[connection signal="timeout" from="StateMachine/WallJump/WallJumpTimer" to="StateMachine/WallJump/WallJumping" method="_on_wall_jump_timer_timeout"]

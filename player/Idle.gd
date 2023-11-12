@@ -25,6 +25,7 @@ func capture_inputs():
 
 
 func physics_process(delta: float, player: CharacterBody2D):
+	player.acceleration = Vector2.ZERO
 	capture_inputs()
 
 	# Update run force direction
@@ -37,12 +38,12 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 	# Update forces
 	run_force = movement_direction * PlayerConstants.ACCEL_X * Vector2.RIGHT
-	air_friction_force = - PlayerConstants.AIR_FRICTION_X * player.velocity
+	air_friction_force.x = - PlayerConstants.AIR_FRICTION_X * player.velocity.x
 
 	# gravity is higher if falling
 	gravity_force = default_gravity_force
-	if (player.velocity.y < 0):
-		gravity_force *= PlayerConstants.FALLING_GRAVITY_MULTIPLIER
+	if (player.velocity.y > 0):
+		gravity_force = PlayerConstants.FALLING_GRAVITY_MULTIPLIER * default_gravity_force
 
 
 	# Update accel
@@ -54,7 +55,7 @@ func physics_process(delta: float, player: CharacterBody2D):
 	# Integrate
 	player.velocity += player.acceleration * delta
 
-	player.velocity.y = max(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
+	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
 
 	# godot doing godot thigns
 	player.move_and_slide()

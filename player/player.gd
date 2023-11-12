@@ -403,33 +403,6 @@ func super_action_physics_process(_delta: float):
 # Procédure physics
 #
 func _physics_process(delta: float):
-	capture_inputs()
-
-	# tmp_velocity can be used in super_actions or other to make temporary changes
-	# on velocity
-	if (tmp_velocity != Vector2.ZERO):
-		velocity = tmp_velocity
-		tmp_velocity = Vector2.ZERO
-
-
-	if (is_on_wall() or is_on_floor()):
-		if (next_action != Super_Actions.PRE_DASH and next_action != Super_Actions.DASH):
-			dash_counter = 0
-
-
-	# Add the gravity if needed
-	if not is_on_floor():
-		acceleration.y = gravity
-
-		if (velocity.y > 0):
-			acceleration.y = gravity * FALLING_GRAVITY_MULTIPLIER
-
-
-	# Indicates the sign of player's input force
-	if is_moving_right:
-		direction = 1
-	elif is_moving_left:
-		direction = -1
 	state_machine.physics_process(delta)
 	# capture_inputs()
 	#
@@ -502,17 +475,6 @@ func _process(delta):
 # make coyote unavailable (surpising)
 func _on_coyote_jump_timer_timeout():
 	is_coyote_jump_available = false
-
-	# Apply the player's input force if needed
-	air_friction_x = AIR_FRICTION_X
-	if (is_wall_jumping):
-		air_friction_x = 0
-
-	if is_moving_left or is_moving_right:
-		acceleration.x = direction * ACCEL_X - air_friction_x * velocity.x
-
-	else:
-		acceleration.x = - air_friction_x * velocity.x
 
 
 # Clears the Super_Actions buffer

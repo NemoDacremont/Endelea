@@ -1,11 +1,13 @@
 extends Node
 
+@onready var dash: Node = get_parent()
 
-@onready var jump = get_parent()
-@onready var player_node = jump.get_parent().get_parent()
+static var pre_dash_time: float = 0
 
 
-# Copy pasted from idle
+static var tmp_velocity: Vector2 = Vector2.ZERO
+
+#  Physics from Idle.gd
 static var is_moving_right: bool = false
 static var is_moving_left: bool = false
 
@@ -30,17 +32,18 @@ func capture_inputs():
 
 
 
-func start():
-	player_node.velocity.y = PlayerConstants.JUMP_VELOCITY
-
-
 
 func physics_process(delta: float, player: CharacterBody2D):
+	player.acceleration = Vector2.ZERO
+
+	if (tmp_velocity != Vector2.ZERO):
+		player.velocity = tmp_velocity
+		
+
+	# Idle with slow down
 	capture_inputs()
 
 
-	player.acceleration = Vector2.ZERO
-	# Almost entirely copy paster from idle (just slowed)
 	# Update run force direction
 	movement_direction = 0
 
@@ -59,32 +62,35 @@ func physics_process(delta: float, player: CharacterBody2D):
 		gravity_force *= PlayerConstants.FALLING_GRAVITY_MULTIPLIER
 
 
-	print(gravity_force)
 	# Update accel
 	player.acceleration = run_force + air_friction_force
 	if (not player.is_on_floor()):
 		player.acceleration += gravity_force
 
 
-
 	# Integrate
 	player.velocity += player.acceleration * delta
-	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
 
+	player.velocity.y = max(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
+
+	tmp_velocity = player.velocity
+	player.velocity *= PlayerConstants.PRE_DASH_VELOCITY_MULTIPLIER
 
 	# godot doing godot thigns
 	player.move_and_slide()
 
-	if (player.is_on_floor() or player.is_on_wall()):
-		jump.get_to_next_state()
+
+	# Predash things
+	pre_dash_time += delta
+
+	if (pre_dash_time >= PlayerConstants.PRE_DASH_DURATION):
+		pre_dash_time = 0
+		tmp_velocity = Vector2.ZERO
+		dash.get_to_next_state()
 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D, _idle: Node):
+func process():
 	pass
-
-
 
 
 

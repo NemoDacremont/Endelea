@@ -1,9 +1,11 @@
 extends Node
 
 
-@onready var jump = get_parent()
-@onready var player_node = jump.get_parent().get_parent()
+@onready var wall_jump: Node = get_parent()
+@onready var player_node: CharacterBody2D = wall_jump.get_parent().get_parent()
+@onready var wall_jump_timer: Timer = $WallJumpTimer
 
+static var are_movements_blocked: bool = false
 
 # Copy pasted from idle
 static var is_moving_right: bool = false
@@ -31,12 +33,14 @@ func capture_inputs():
 
 
 func start():
-	player_node.velocity.y = PlayerConstants.JUMP_VELOCITY
+	player_node.velocity = PlayerConstants.JUMP_VELOCITY * wall_jump.wall_jump_direction
+	are_movements_blocked = true
 
 
 
 func physics_process(delta: float, player: CharacterBody2D):
 	capture_inputs()
+	print(wall_jump.wall_jump_direction)
 
 
 	player.acceleration = Vector2.ZERO
@@ -49,6 +53,10 @@ func physics_process(delta: float, player: CharacterBody2D):
 	elif (is_moving_left):
 		movement_direction = -1
 
+	if (are_movements_blocked):
+		movement_direction = 0
+
+
 	# Update forces
 	run_force = movement_direction * PlayerConstants.ACCEL_X * Vector2.RIGHT
 	air_friction_force.x = - PlayerConstants.AIR_FRICTION_X * player.velocity.x
@@ -59,12 +67,10 @@ func physics_process(delta: float, player: CharacterBody2D):
 		gravity_force *= PlayerConstants.FALLING_GRAVITY_MULTIPLIER
 
 
-	print(gravity_force)
 	# Update accel
 	player.acceleration = run_force + air_friction_force
 	if (not player.is_on_floor()):
 		player.acceleration += gravity_force
-
 
 
 	# Integrate
@@ -76,7 +82,7 @@ func physics_process(delta: float, player: CharacterBody2D):
 	player.move_and_slide()
 
 	if (player.is_on_floor() or player.is_on_wall()):
-		jump.get_to_next_state()
+		wall_jump.get_to_next_state()
 
 
 
@@ -85,7 +91,6 @@ func process(_delta: float, _player: CharacterBody2D, _idle: Node):
 	pass
 
 
-
-
-
+func _on_wall_jump_timer_timeout():
+	are_movements_blocked = false
 
