@@ -69,7 +69,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 	player.move_and_slide()
 
 	pre_jump_time += delta
-	print("Prejump time: ",	pre_jump_time, " / ", PlayerConstants.PRE_JUMP_DURATION)
 	if (pre_jump_time >= PlayerConstants.PRE_JUMP_DURATION):
 		pre_jump_time = 0
 		jump.get_to_next_state()
