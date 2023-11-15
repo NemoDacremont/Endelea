@@ -1,12 +1,18 @@
 extends Node
 
-
+# Nodes
 @onready var dash: Node = get_node("../Dash")
 @onready var jump: Node = get_node("../Jump")
+@onready var wall_jump: Node = get_node("../WallJump")
 @onready var state_machine: Node = get_parent()
 
 @onready var player_node: CharacterBody2D = find_parent("Player")
 @onready var animation_node: AnimatedSprite2D = get_node("../../Sprite")
+
+
+# 
+static var was_on_wall: bool = false
+
 
 static var is_moving_right: bool = false
 static var is_moving_left: bool = false
@@ -23,7 +29,11 @@ static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var animation: String = PlayerConstants.IDLE_ANIMATION_NAME
 static var frame: int = -1;
 
-func capture_inputs():
+
+static var wall_interaction_force: Vector2 = Vector2.UP
+
+
+func capture_inputs() -> void:
 	is_moving_right = false
 	is_moving_left = false
 
@@ -33,15 +43,31 @@ func capture_inputs():
 	elif (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
 		is_moving_left = true
 
+
+
 	if (dash.is_triggered()):
 		state_machine.push_state(state_machine.States.DASH)
+
+	elif (wall_jump.is_triggered()):
+		state_machine.push_state(state_machine.States.WALL_JUMP)
 
 	elif (jump.is_triggered()):
 		state_machine.push_state(state_machine.States.JUMP)
 
+	else:
+		state_machine.push_state(state_machine.States.IDLE)
 
 
-func animation_process():
+
+func can_start() -> bool:
+	return true
+
+
+func start() -> void:
+	pass
+
+
+func animation_process() -> void:
 	frame = -1
 	animation = PlayerConstants.IDLE_ANIMATION_NAME
 
@@ -75,7 +101,9 @@ func animation_process():
 	
 
 
-func physics_process(delta: float, player: CharacterBody2D):
+
+
+func physics_process(delta: float, player: CharacterBody2D) -> void:
 	player.acceleration = Vector2.ZERO
 	capture_inputs()
 
@@ -97,8 +125,21 @@ func physics_process(delta: float, player: CharacterBody2D):
 		gravity_force = PlayerConstants.FALLING_GRAVITY_MULTIPLIER * default_gravity_force
 
 
+	if (not was_on_wall && player.is_on_wall()):
+		player.velocity /= 2
+		was_on_wall = true
+
+	elif (was_on_wall && not player.is_on_wall()):
+		was_on_wall = false
+
+
+	wall_interaction_force = Vector2.ZERO
+	if (player.is_on_wall()):
+		wall_interaction_force = PlayerConstants.WALL_INTERACTION_NORM * (-sign(player.velocity.y)) * Vector2.DOWN
+
+
 	# Update accel
-	player.acceleration = run_force + air_friction_force
+	player.acceleration = run_force + air_friction_force + wall_interaction_force
 	if (not player.is_on_floor()):
 		player.acceleration += gravity_force
 
@@ -113,7 +154,11 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D):
+func process(_delta: float, _player: CharacterBody2D) -> void:
 	animation_process()
+
+
+func background_process() -> void:
+	pass
 
 
