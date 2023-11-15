@@ -33,6 +33,7 @@ static var frame: int = -1;
 static var wall_interaction_force: Vector2 = Vector2.UP
 
 
+
 func capture_inputs() -> void:
 	is_moving_right = false
 	is_moving_left = false
@@ -93,6 +94,10 @@ func animation_process() -> void:
 			frame = 2;
 
 
+	if (player_node.is_on_wall_only()):
+		animation = PlayerConstants.WALL_SLIDE_ANIMATION_NAME
+
+
 	animation_node.play(animation)
 
 	if (frame != -1):
@@ -126,7 +131,6 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 
 
 	if (not was_on_wall && player.is_on_wall()):
-		player.velocity /= 2
 		was_on_wall = true
 
 	elif (was_on_wall && not player.is_on_wall()):
