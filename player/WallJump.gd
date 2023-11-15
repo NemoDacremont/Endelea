@@ -7,13 +7,15 @@ static var wall_jump_state: Wall_Jump_State = Wall_Jump_State.NONE
 @onready var pre_wall_jump: Node = $PreWallJump
 @onready var wall_jumping: Node = $WallJumping
 @onready var state_machine: Node = get_parent()
-static var player_node: CharacterBody2D
+
+@onready var player_node: CharacterBody2D = find_parent("Player")
+@onready var dash: Node = get_node("../Dash")
 
 var wall_jump_direction: Vector2 = Vector2.UP
 
 
-func is_triggered(player: CharacterBody2D) -> bool:
-	if (player.is_on_wall_only()):
+func is_triggered() -> bool:
+	if (player_node.is_on_wall_only()):
 		# Wall jump to the right
 		if (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
 			wall_jump_direction = Vector2(1.5, -1)
@@ -30,9 +32,8 @@ func is_triggered(player: CharacterBody2D) -> bool:
 	return false
 
 
-func start(player: CharacterBody2D):
+func start():
 	wall_jump_state = Wall_Jump_State.PRE_WALL_JUMP
-	player_node = player
 
 
 
@@ -63,6 +64,10 @@ func physics_process(delta: float, player: CharacterBody2D):
 		Wall_Jump_State.NONE:  # isn't supposed to happen
 			print("Wall Jump in NONE state, not supposed to happen")
 			pass
+
+
+	if (dash.is_triggered()):
+		state_machine.push_state(state_machine.States.DASH)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

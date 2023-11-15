@@ -136,100 +136,50 @@ const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus s
 var wall_jump_direction: Vector2 = Vector2.ZERO
 var d: int = 1
 
-
-#
-# Animations
-#
-const IDLE_ANIMATION_NAME: String = "Idle"
-const WALK_ANIMATION_NAME: String = "Walk"
-const RUN_ANIMATION_NAME: String = "Run"
-const JUMP_ANIMATION_NAME: String = "Jump"
-const LAND_ANIMATION_NAME: String = "Land"
-const WALL_SLIDE_ANIMATION_NAME: String = "Wall_Slide"
-
-const JUMP_ANIMATION_EPSILON: float = abs(JUMP_VELOCITY / 3)
-
-
-@onready var animation_node: AnimatedSprite2D = $Sprite
-var animation: String = IDLE_ANIMATION_NAME
-var animationFrame: int = 0
-
-
-#
-#  Procédure UX
-#
-func capture_inputs():
-	is_moving_right = false
-	is_moving_left = false
-
-	# 
-	if not has_just_left_floor && (not is_on_floor()):
-		has_just_left_floor = true
-		is_coyote_jump_available = true
-		coyote_jump_timer.start(COYOTE_JUMP_DURATION)
-
-
-	if has_just_left_floor && is_on_floor():
-		has_just_left_floor = false
-
-
-	if (not block_basic_input):
-		if Input.is_action_pressed(MOVE_RIGHT_ACTION_NAME):
-			is_moving_right = true
-		if Input.is_action_pressed(MOVE_LEFT_ACTION_NAME):
-			is_moving_left = true
-
-	if (Input.is_action_pressed("reset_position")):
-		position = Vector2.ZERO
-
-	super_action_capture_inputs()
-
-
-
 #
 # Procédures Animations
 #
-func animation_process(delta):
-	animation = IDLE_ANIMATION_NAME  # Default animation
-	animationFrame = animation_node.frame  # Modify it after if necessary
-
-	if (is_moving_left or is_moving_right):
-		animation = RUN_ANIMATION_NAME
-
-	# Flip according to the direction the player is going
-	if (is_moving_right):
-		animation_node.flip_h = false
-
-	elif (is_moving_left):
-		animation_node.flip_h = true
-
-	# If is jumping or is falling, use JUMP_ANIMATION according to the speed
-	if (not is_on_floor() and not is_on_wall()):
-		animation = JUMP_ANIMATION_NAME
-
-		if (velocity.y < 0):
-			animationFrame = 0
-
-		# if velocity is slow, use special frame
-		elif (abs(velocity.y) <= JUMP_ANIMATION_EPSILON):
-			animationFrame = 1
-
-		elif (velocity.y > 0):
-			animationFrame = 2
-
-		animation_node.frame = animationFrame
-
-
-	animation_node.play(animation)
-
-
-	if (is_on_wall()):
-		animation = WALL_SLIDE_ANIMATION_NAME
-		animation_node.play(animation)
-
-
-	# super_action_animations_process overrides others if needed
-	super_action_animations_process(delta)
+# func animation_process(delta):
+# 	animation = IDLE_ANIMATION_NAME  # Default animation
+# 	animationFrame = animation_node.frame  # Modify it after if necessary
+#
+# 	if (is_moving_left or is_moving_right):
+# 		animation = RUN_ANIMATION_NAME
+#
+# 	# Flip according to the direction the player is going
+# 	if (is_moving_right):
+# 		animation_node.flip_h = false
+#
+# 	elif (is_moving_left):
+# 		animation_node.flip_h = true
+#
+# 	# If is jumping or is falling, use JUMP_ANIMATION according to the speed
+# 	if (not is_on_floor() and not is_on_wall()):
+# 		animation = JUMP_ANIMATION_NAME
+#
+# 		if (velocity.y < 0):
+# 			animationFrame = 0
+#
+# 		# if velocity is slow, use special frame
+# 		elif (abs(velocity.y) <= JUMP_ANIMATION_EPSILON):
+# 			animationFrame = 1
+#
+# 		elif (velocity.y > 0):
+# 			animationFrame = 2
+#
+# 		animation_node.frame = animationFrame
+#
+#
+# 	animation_node.play(animation)
+#
+#
+# 	if (is_on_wall()):
+# 		animation = WALL_SLIDE_ANIMATION_NAME
+# 		animation_node.play(animation)
+#
+#
+# 	# super_action_animations_process overrides others if needed
+# 	super_action_animations_process(delta)
 
 
 #
@@ -287,41 +237,41 @@ func super_action_capture_inputs():
 
 
 # Handles special animations for Super_Actions, if no needs, just pass
-func super_action_animations_process(delta):
-	if (next_action == Super_Actions.PRE_JUMP or next_action == Super_Actions.IS_PRE_JUMPING):
-		if (is_on_floor() or is_on_wall() or is_coyote_jump_available):
-			match (pre_jump_part):
-				0:  # First part: lower his body
-					animation_node.frame = 1
-					animation_node.play(LAND_ANIMATION_NAME)
-					pre_jump_part1_time += delta
-
-					if (pre_jump_part1_time >= PRE_JUMP_PART1_DURATION):
-						pre_jump_part = (pre_jump_part + 1) % pre_jump_part_count
-						pre_jump_part1_time = 0
-
-
-				1:  # Second part: Crouches before jump
-					animation_node.frame = 0
-					animation_node.play(LAND_ANIMATION_NAME)
-					pre_jump_part2_time += delta
-
-					if (pre_jump_part2_time >= PRE_JUMP_PART2_DURATION):
-						pre_jump_part = (pre_jump_part + 1) % pre_jump_part_count
-						pre_jump_part1_time = 0
-
-						next_action = Super_Actions.JUMP_SUPER_ACTION
-
-	elif (next_action == Super_Actions.JUMP_SUPER_ACTION or next_action == Super_Actions.IS_JUMPING):
-		pass  # Leave the default animation (falling etc...) coded in animation_process
-
-
-	elif (next_action == Super_Actions.PRE_DASH):
-		pre_dash_time += delta
-
-		if (pre_dash_time >= PRE_DASH_DURATION):
-			next_action = Super_Actions.DASH
-			pre_dash_time = 0
+# func super_action_animations_process(delta):
+# 	if (next_action == Super_Actions.PRE_JUMP or next_action == Super_Actions.IS_PRE_JUMPING):
+# 		if (is_on_floor() or is_on_wall() or is_coyote_jump_available):
+# 			match (pre_jump_part):
+# 				0:  # First part: lower his body
+# 					animation_node.frame = 1
+# 					animation_node.play(LAND_ANIMATION_NAME)
+# 					pre_jump_part1_time += delta
+#
+# 					if (pre_jump_part1_time >= PRE_JUMP_PART1_DURATION):
+# 						pre_jump_part = (pre_jump_part + 1) % pre_jump_part_count
+# 						pre_jump_part1_time = 0
+#
+#
+# 				1:  # Second part: Crouches before jump
+# 					animation_node.frame = 0
+# 					animation_node.play(LAND_ANIMATION_NAME)
+# 					pre_jump_part2_time += delta
+#
+# 					if (pre_jump_part2_time >= PRE_JUMP_PART2_DURATION):
+# 						pre_jump_part = (pre_jump_part + 1) % pre_jump_part_count
+# 						pre_jump_part1_time = 0
+#
+# 						next_action = Super_Actions.JUMP_SUPER_ACTION
+#
+# 	elif (next_action == Super_Actions.JUMP_SUPER_ACTION or next_action == Super_Actions.IS_JUMPING):
+# 		pass  # Leave the default animation (falling etc...) coded in animation_process
+#
+#
+# 	elif (next_action == Super_Actions.PRE_DASH):
+# 		pre_dash_time += delta
+#
+# 		if (pre_dash_time >= PRE_DASH_DURATION):
+# 			next_action = Super_Actions.DASH
+# 			pre_dash_time = 0
 
 
 
@@ -468,7 +418,7 @@ func _physics_process(delta: float):
 
 
 func _process(delta):
-	animation_process(delta)
+	# animation_process(delta)
 	state_machine.process(delta)
 
 

@@ -1,8 +1,15 @@
 extends Node
 
 
-@onready var jump = get_parent()
-@onready var player_node = jump.get_parent().get_parent()
+@onready var jump: Node = get_parent()
+@onready var player_node: CharacterBody2D = jump.get_parent().get_parent()
+
+@onready var state_machine: Node = find_parent("StateMachine")
+
+# Anmations
+@onready var animation_node: AnimatedSprite2D = get_node("../../../Sprite")
+static var animation: String = PlayerConstants.IDLE_ANIMATION_NAME
+static var frame: int = -1;
 
 
 # Copy pasted from idle
@@ -27,6 +34,31 @@ func capture_inputs():
 
 	elif (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
 		is_moving_left = true
+
+	elif (jump.is_triggered()):
+		state_machine.push_state(state_machine.States.JUMP)
+
+
+func animation_process():
+	animation = PlayerConstants.JUMP_ANIMATION_NAME
+
+	if (is_moving_right):
+		animation_node.flip_h = false
+	elif (is_moving_left):
+		animation_node.flip_h = true
+
+	# Choose frame according to falling speed
+	if (player_node.velocity.y < 0):
+		frame = 0;
+
+	elif (abs(player_node.velocity.y) < PlayerConstants.JUMP_ANIMATION_EPSILON):
+		frame = 1;
+
+	elif (player_node.velocity.y > 0):
+		frame = 2;
+
+	animation_node.play(animation)
+	animation_node.frame = frame
 
 
 
@@ -59,7 +91,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 		gravity_force *= PlayerConstants.FALLING_GRAVITY_MULTIPLIER
 
 
-	print(gravity_force)
 	# Update accel
 	player.acceleration = run_force + air_friction_force
 	if (not player.is_on_floor()):
@@ -81,8 +112,8 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D, _idle: Node):
-	pass
+func process():
+	animation_process()
 
 
 

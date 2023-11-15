@@ -48,9 +48,17 @@ func is_triggered() -> bool:
 	return false
 
 
+func can_dash() -> bool:
+	if (dash_counter >= PlayerConstants.MAX_DASH_COUNTER):
+		return false
+
+	return true
+
+
 func start():
 	dash_state = Dash_State.PRE_DASH
-	print("Dash direction: ", dash_direction)
+	dash_counter += 1
+	# print("Dash direction: ", dash_direction)
 
 
 func get_to_next_state():
@@ -58,7 +66,7 @@ func get_to_next_state():
 		dash_state = Dash_State.DASHING
 
 	elif dash_state == Dash_State.DASHING:
-		state_machine.state = state_machine.States.IDLE
+		state_machine.push_state(state_machine.States.IDLE)
 		dash_state = Dash_State.NONE
 
 	elif dash_state == Dash_State.NONE:  # ??

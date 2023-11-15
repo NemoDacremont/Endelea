@@ -1,5 +1,20 @@
 extends Node
 
+const STATE_BUFFER_TIMER_DURATION: float = 0.2
+#
+#  Animations
+#
+const IDLE_ANIMATION_NAME: String = "Idle"
+const WALK_ANIMATION_NAME: String = "Walk"
+const RUN_ANIMATION_NAME: String = "Run"
+const JUMP_ANIMATION_NAME: String = "Jump"
+const LAND_ANIMATION_NAME: String = "Land"
+const WALL_SLIDE_ANIMATION_NAME: String = "Wall_Slide"
+
+const JUMP_ANIMATION_EPSILON: float = abs(JUMP_VELOCITY / 3)
+
+
+const COYOTE_JUMP_DURATION: float = 0.1
 #
 #  Dimensions
 #

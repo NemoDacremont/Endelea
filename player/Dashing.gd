@@ -12,7 +12,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 	player.acceleration = Vector2.ZERO
 
 	dash_direction = dash.dash_direction
-	print("Dash direction: ", dash_direction)
 	dashing_time += delta
 
 	player.velocity = dash_direction * PlayerConstants.DASH_SPEED

@@ -1,6 +1,13 @@
 extends Node
 
 
+@onready var dash: Node = get_node("../Dash")
+@onready var jump: Node = get_node("../Jump")
+@onready var state_machine: Node = get_parent()
+
+@onready var player_node: CharacterBody2D = find_parent("Player")
+@onready var animation_node: AnimatedSprite2D = get_node("../../Sprite")
+
 static var is_moving_right: bool = false
 static var is_moving_left: bool = false
 
@@ -13,6 +20,9 @@ static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DO
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
 
+static var animation: String = PlayerConstants.IDLE_ANIMATION_NAME
+static var frame: int = -1;
+
 func capture_inputs():
 	is_moving_right = false
 	is_moving_left = false
@@ -22,6 +32,47 @@ func capture_inputs():
 
 	elif (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
 		is_moving_left = true
+
+	if (dash.is_triggered()):
+		state_machine.push_state(state_machine.States.DASH)
+
+	elif (jump.is_triggered()):
+		state_machine.push_state(state_machine.States.JUMP)
+
+
+
+func animation_process():
+	frame = -1
+	animation = PlayerConstants.IDLE_ANIMATION_NAME
+
+	if (is_moving_right):
+		animation_node.flip_h = false
+	elif (is_moving_left):
+		animation_node.flip_h = true
+
+	if (is_moving_left or is_moving_right):
+		animation = PlayerConstants.RUN_ANIMATION_NAME
+
+	if (not player_node.is_on_floor() and not player_node.is_on_wall()):
+		animation = PlayerConstants.JUMP_ANIMATION_NAME
+
+		# Choose frame according to falling speed
+		if (player_node.velocity.y < 0):
+			frame = 0;
+
+		elif (abs(player_node.velocity.y) < PlayerConstants.JUMP_ANIMATION_EPSILON):
+			frame = 1;
+
+		elif (player_node.velocity.y > 0):
+			frame = 2;
+
+
+	animation_node.play(animation)
+
+	if (frame != -1):
+		animation_node.frame = frame
+
+	
 
 
 func physics_process(delta: float, player: CharacterBody2D):
@@ -63,6 +114,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process(_delta: float, _player: CharacterBody2D):
-	pass
+	animation_process()
 
 
