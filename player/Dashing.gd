@@ -17,15 +17,13 @@ func physics_process(delta: float, player: CharacterBody2D):
 	player.velocity = dash_direction * PlayerConstants.DASH_SPEED
 	player.move_and_slide()
 
-	print("Dashing: ", dashing_time, " / ", PlayerConstants.DASH_DURATION)
-
 	if (dashing_time >= PlayerConstants.DASH_DURATION):
 		dashing_time = 0
 		player.velocity.y = player.velocity.y / 2
 		dash.get_to_next_state()
 
 
-func process(delta):
+func process(_delta):
 	pass
 
 

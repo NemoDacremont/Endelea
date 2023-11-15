@@ -1,5 +1,8 @@
 extends Node
 
+signal reset_dash
+
+
 # Count the dashes used, one dash is available till you touch floor or wall
 static var dash_counter: int = 0
 
@@ -16,7 +19,9 @@ static var dash_state: Dash_State = Dash_State.NONE
 @onready var state_machine: Node = get_parent()
 @onready var pre_dash: Node = $PreDash
 @onready var dashing: Node = $Dashing
-@onready var idle: Node = $Idle  # shouldn't be used, but to be sure
+@onready var idle: Node = get_node("../Idle")  # shouldn't be used, but to be sure
+
+@onready var player_node: CharacterBody2D = find_parent("Player")
 
 
 func is_triggered() -> bool:
@@ -48,17 +53,13 @@ func is_triggered() -> bool:
 	return false
 
 
-func can_dash() -> bool:
-	if (dash_counter >= PlayerConstants.MAX_DASH_COUNTER):
-		return false
-
-	return true
+func can_start() -> bool:
+	return dash_counter < PlayerConstants.MAX_DASH_COUNTER
 
 
 func start():
 	dash_state = Dash_State.PRE_DASH
 	dash_counter += 1
-	# print("Dash direction: ", dash_direction)
 
 
 func get_to_next_state():
@@ -93,19 +94,25 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D):
-
+func process(delta: float, _player: CharacterBody2D):
 	match (dash_state):
 		Dash_State.PRE_DASH:
-			pass
+			pre_dash.process(delta)
 
 		Dash_State.DASHING:
-			pass
+			dashing.process(delta)
 
 		Dash_State.NONE:  # isn't supposed to happen
 			print("Dash is in NONE state, shouldn't be possible")
 
 
+func background_process():
+	if (dash_counter != 0 && player_node.is_on_floor()):
+		emit_signal("reset_dash")
+
+
+func _on_reset_dash():
+	dash_counter = 0
 
 
 

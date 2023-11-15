@@ -89,7 +89,7 @@ func physics_process(delta: float, player: CharacterBody2D):
 		dash.get_to_next_state()
 
 
-func process():
+func process(_delta):
 	pass
 
 
