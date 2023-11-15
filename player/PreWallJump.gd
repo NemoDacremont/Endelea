@@ -1,8 +1,6 @@
 extends Node
 
-
-
-@onready var jump = get_parent()
+@onready var wall_jump = get_parent()
 
 static var pre_jump_time: float = 0
 
@@ -70,15 +68,14 @@ func physics_process(delta: float, player: CharacterBody2D):
 	player.move_and_slide()
 
 	pre_jump_time += delta
-	print("Prejump time: ",	pre_jump_time, " / ", PlayerConstants.PRE_WALL_JUMP_DURATION)
 	if (pre_jump_time >= PlayerConstants.PRE_WALL_JUMP_DURATION):
 		pre_jump_time = 0
-		jump.get_to_next_state()
+		wall_jump.get_to_next_state()
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func process(_delta: float, _player: CharacterBody2D, _idle: Node):
+func process(_delta: float, _player: CharacterBody2D):
 	pass
 
 
