@@ -23,21 +23,23 @@ func is_triggered() -> bool:
 	return false
 
 
+func can_start():
+	return player_node.is_on_floor() or coyote_jump.is_coyote_jump_available()
+
+
 func start():
 	jump_state = Jump_State.PRE_JUMP
-	print("jump start ", jump_state)
-
-
+	coyote_jump.force_coyote_availability(false)
 
 
 func get_to_next_state():
 	if jump_state == Jump_State.PRE_JUMP:
-		jumping.start()
 		jump_state = Jump_State.JUMPING
+		jumping.start()
 
 	elif jump_state == Jump_State.JUMPING:
-		state_machine.push_state(state_machine.States.IDLE)
 		jump_state = Jump_State.NONE
+		state_machine.push_state(state_machine.States.IDLE)
 
 
 	elif jump_state == Jump_State.NONE:  # ??
@@ -45,7 +47,6 @@ func get_to_next_state():
 
 
 func physics_process(delta: float, player: CharacterBody2D):
-	print(jump_state)
 	match (jump_state):
 		Jump_State.PRE_JUMP:
 			pre_jump.physics_process(delta, player)
@@ -59,6 +60,9 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 	if (dash.is_triggered()):
 		state_machine.push_state(state_machine.States.DASH)
+
+	elif (is_triggered()):
+		state_machine.push_state(state_machine.States.JUMP)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -74,6 +78,9 @@ func process(_delta: float, _player: CharacterBody2D):
 			# print("Jump in NONE state, not supposed to happen")
 			pass
 
+
+func background_process():
+	coyote_jump.physics_process()
 
 
 

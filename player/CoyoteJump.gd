@@ -7,7 +7,7 @@ static var was_on_floor: bool = false
 static var available: bool = false
 
 
-func force_coyote_availability(coyote_state: bool):
+func force_coyote_availability(coyote_state: bool) -> void:
 	available = coyote_state
 
 
