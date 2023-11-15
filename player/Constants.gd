@@ -1,6 +1,6 @@
 extends Node
 
-const STATE_BUFFER_TIMER_DURATION: float = 0.2
+const STATE_BUFFER_TIMER_DURATION: float = 0.075
 #
 #  Animations
 #
@@ -14,7 +14,7 @@ const WALL_SLIDE_ANIMATION_NAME: String = "Wall_Slide"
 const JUMP_ANIMATION_EPSILON: float = abs(JUMP_VELOCITY / 3)
 
 
-const COYOTE_JUMP_DURATION: float = 0.1
+const COYOTE_JUMP_DURATION: float = 0.075
 #
 #  Dimensions
 #
@@ -42,6 +42,8 @@ const FALLING_GRAVITY_MULTIPLIER: float = 1.5
 const GRAVITY: float = 8 * MAX_HEIGHT_JUMP / (JUMP_DURATION**2)
 const MAX_FALL_SPEED: float = 8 * HEIGHT  # 8 par seconde
 const JUMP_VELOCITY: float = - 4 * MAX_HEIGHT_JUMP / JUMP_DURATION  # calculus so jump duration is .5s and max height is 3 * HEIGHT
+
+const WALL_INTERACTION_NORM: float = GRAVITY / 2
 
 # Jump
 ## PreJump
@@ -78,6 +80,8 @@ const MAX_DASH_COUNTER: int = 1
 const PRE_WALL_JUMP_DURATION: float = 0.025  # in sec
 const PRE_WALL_JUMP_VELOCITY_MULTIPLIER: float = 0.25
 
+
+const WALL_JUMP_BLOCKING_DURATION: float = .1  # s
 # A bit dirty way to handle things i think, im lazy
 
 # Idle
