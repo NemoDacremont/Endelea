@@ -1,6 +1,6 @@
 extends Node
 
-const STATE_BUFFER_TIMER_DURATION: float = 0.075
+const STATE_BUFFER_TIMER_DURATION: float = .1
 #
 #  Animations
 #

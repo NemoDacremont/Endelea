@@ -360,7 +360,7 @@ shape = SubResource("CapsuleShape2D_al143")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Idle"
+animation = &"Wall_Slide"
 autoplay = "Idle"
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
@@ -394,6 +394,9 @@ script = ExtResource("12_bja5w")
 script = ExtResource("20_kam2n")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="StateMachine/Jump/CoyoteJump"]
+one_shot = true
+
+[node name="JumpBufferTimer" type="Timer" parent="StateMachine/Jump"]
 one_shot = true
 
 [node name="Idle" type="Node" parent="StateMachine"]
@@ -431,6 +434,7 @@ script = ExtResource("13_blxh5")
 [connection signal="timeout" from="CoyoteJumpTimer" to="." method="_on_coyote_jump_timer_timeout"]
 [connection signal="timeout" from="WallJumpTimer" to="." method="_on_wall_jump_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Jump/CoyoteJump/CoyoteJumpTimer" to="StateMachine/Jump/CoyoteJump" method="_on_coyote_jump_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Jump/JumpBufferTimer" to="StateMachine/Jump" method="_on_jump_buffer_timer_timeout"]
 [connection signal="reset_dash" from="StateMachine/Dash" to="StateMachine/Dash" method="_on_reset_dash"]
 [connection signal="timeout" from="StateMachine/WallJump/WallJumpTimer" to="StateMachine/WallJump/WallJumping" method="_on_wall_jump_timer_timeout"]
 [connection signal="timeout" from="StateMachine/StateBufferTimer" to="StateMachine" method="_on_state_buffer_timer_timeout"]

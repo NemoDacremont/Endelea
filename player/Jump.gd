@@ -12,6 +12,8 @@ static var jump_state: Jump_State = Jump_State.NONE
 @onready var coyote_jump: Node = $CoyoteJump
 @onready var player_node: CharacterBody2D = find_parent("Player")
 
+@onready var jump_buffer_timer: Timer = $JumpBufferTimer
+
 
 func is_triggered() -> bool:
 	if (Input.is_action_just_pressed(PlayerConstants.JUMP_ACTION_NAME)):
@@ -19,6 +21,8 @@ func is_triggered() -> bool:
 			return true
 		else:
 			state_machine.buffer_state(state_machine.States.JUMP)
+			jump_buffer_timer.start(PlayerConstants.STATE_BUFFER_TIMER_DURATION)
+			print("Buffer jumpp")
 
 	return false
 
@@ -83,5 +87,7 @@ func background_process():
 	coyote_jump.physics_process()
 
 
+func _on_jump_buffer_timer_timeout():
+	state_machine.clear_buffer(state_machine.States.JUMP)
 
 

@@ -21,8 +21,8 @@ enum States {
 
 const STATES_NAME = [
 	"Dash",
-	"Jump",
 	"Wall jump",
+	"Jump",
 	"Idle"
 ]
 
@@ -49,7 +49,11 @@ static var state_buffer: States = States.IDLE  # Used
 #
 func buffer_state(_state: States):
 	state_buffer = _state
-	state_buffer_timer.start(PlayerConstants.STATE_BUFFER_TIMER_DURATION)
+
+
+func clear_buffer(state_to_clear: States):
+	if (state_buffer == state_to_clear):
+		state_buffer = States.IDLE
 
 
 func get_to_next_state() -> void:
@@ -58,6 +62,11 @@ func get_to_next_state() -> void:
 
 
 func push_state(new_state: States) -> void:
+	if (state_buffer < state && state_buffer < new_state && states_nodes[state_buffer].can_start()):
+		print("buffered: ", STATES_NAME[state_buffer])
+		new_state = state_buffer
+		buffer_state(States.IDLE)
+
 	if (states_nodes[new_state].can_start()):
 		states_nodes[new_state].start()
 		state = new_state
@@ -103,4 +112,6 @@ func process(delta):
 
 func _on_state_buffer_timer_timeout():
 	state_buffer = States.IDLE
+
+
 
