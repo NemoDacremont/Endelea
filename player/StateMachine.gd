@@ -19,6 +19,7 @@ enum States {
 	IDLE,
 }
 
+## indexes must coincide with enum States elements values
 const STATES_NAME = [
 	"Dash",
 	"Wall jump",
@@ -26,7 +27,7 @@ const STATES_NAME = [
 	"Idle"
 ]
 
-
+## indexes must coincide with enum States elements values
 @onready var states_nodes = [
 	dash,
 	wall_jump,
@@ -39,10 +40,6 @@ const STATES_NAME = [
 static var state: States = States.IDLE
 static var tmp_state: States = States.IDLE
 static var state_buffer: States = States.IDLE  # Used
-
-# State Buffer (TODO)
-@onready var state_buffer_timer: Timer = $StateBufferTimer
-
 
 #
 #  Functions
@@ -63,55 +60,23 @@ func get_to_next_state() -> void:
 
 func push_state(new_state: States) -> void:
 	if (state_buffer < state && state_buffer < new_state && states_nodes[state_buffer].can_start()):
-		print("buffered: ", STATES_NAME[state_buffer])
 		new_state = state_buffer
+		states_nodes[new_state].stop_buffer_timer()
 		buffer_state(States.IDLE)
 
 	if (states_nodes[new_state].can_start()):
 		states_nodes[new_state].start()
 		state = new_state
 
-	# match (new_state):
-	# 	States.DASH:
-	# 		dash.start()
-	# 		state = States.DASH
-	#
-	#
-	# 	States.WALL_JUMP:
-	# 		wall_jump.start()
-	# 		state = new_state
-	#
-	#
-	# 	States.JUMP:
-	# 		jump.start()
-	# 		state = new_state
-	#
-	#
-	# 	States.IDLE:
-	# 		if (state_buffer == States.IDLE):
-	# 			state = state_buffer
-	#
-	# 		elif jump.can_start():
-	# 			tmp_state = state_buffer  # Need to use this to avoid call cycle
-	# 			state_buffer = States.IDLE
-	# 			state_buffer_timer.stop()
-	# 			push_state(tmp_state)
-
 
 func physics_process(delta):
 	states_nodes[state].physics_process(delta, player)
 
-	# Background tasks like dash reset
+	# Background to handle tasks like dash reset
 	for node in states_nodes:
 		node.background_process()
 
 
 func process(delta):
 	states_nodes[state].process(delta, player)
-
-
-func _on_state_buffer_timer_timeout():
-	state_buffer = States.IDLE
-
-
 

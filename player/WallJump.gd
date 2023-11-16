@@ -25,7 +25,6 @@ func is_triggered() -> bool:
 			wall_jump_direction = Vector2(1, 1.5)
 
 		else:
-			print("Walljump: no direction")
 			return false
 
 		wall_jump_direction = wall_jump_direction.normalized()
