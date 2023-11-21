@@ -2,7 +2,7 @@ extends Control
 
 signal exit_control_screen
 
-const MIN_TIMER_DURATION: float = .5  # .5s before enabling quitting
+const MIN_TIMER_DURATION: float = 1  # .5s before enabling quitting
 
 var min_timer: Timer
 var tween: Tween
@@ -24,11 +24,13 @@ func _ready():
 func _input(event):
 	if (min_timer.is_stopped() && event is InputEventKey):
 		emit_signal("exit_control_screen")
+		get_tree().change_scene_to_file("res://main.tscn")
 
 
 func _on_min_timer_timeout():
 	tween = get_tree().create_tween()
 	tween.tween_property(press_key, "visible_ratio", 1, .5)
+
 
 
 
