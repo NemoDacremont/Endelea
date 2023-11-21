@@ -1,0 +1,185 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxcsbmp51hy32"]
+
+[ext_resource type="Script" path="res://controls_screen.gd" id="1_y18n3"]
+
+[sub_resource type="Theme" id="Theme_qyqpk"]
+Label/constants/outline_size = -1
+Label/font_sizes/font_size = 32
+
+[node name="ControlsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y18n3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="LeftColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_qyqpk")
+
+[node name="GoRight" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Keys2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GoRight"]
+layout_mode = 2
+
+[node name="RightArrow" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoRight/Keys2"]
+layout_mode = 2
+text = "󰜵 "
+
+[node name="D" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoRight/Keys2"]
+layout_mode = 2
+text = "󰬋 "
+
+[node name="RightArrowAction" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoRight"]
+layout_mode = 2
+text = "Move to the right"
+
+[node name="GoLeft" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Keys2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GoLeft"]
+layout_mode = 2
+
+[node name="LeftArrow" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoLeft/Keys2"]
+layout_mode = 2
+text = "󰜲 "
+
+[node name="Q" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoLeft/Keys2"]
+layout_mode = 2
+text = "󰬘 "
+
+[node name="Action" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GoLeft"]
+layout_mode = 2
+text = "Move to the left"
+
+[node name="Jump" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Keys2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/Jump"]
+layout_mode = 2
+
+[node name="Space" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Jump/Keys2"]
+layout_mode = 2
+text = "󱁐 "
+
+[node name="O" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Jump/Keys2"]
+layout_mode = 2
+text = "󰬖 "
+
+[node name="JumpAction" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Jump"]
+layout_mode = 2
+text = "Jump"
+
+[node name="Dash" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="DashKeys" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/Dash"]
+layout_mode = 2
+
+[node name="Shift" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Dash/DashKeys"]
+layout_mode = 2
+text = "󰘶 "
+
+[node name="K" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Dash/DashKeys"]
+layout_mode = 2
+text = "󰬒 "
+
+[node name="DashAction" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/Dash"]
+layout_mode = 2
+text = "Dash"
+
+[node name="LookUp" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LookUpKeys" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/LookUp"]
+layout_mode = 2
+
+[node name="UpArrow" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookUp/LookUpKeys"]
+layout_mode = 2
+text = "󰜸 "
+
+[node name="Z" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookUp/LookUpKeys"]
+layout_mode = 2
+text = "󰬡 "
+
+[node name="LookUpAction" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookUp"]
+layout_mode = 2
+text = "Up direction (dash)"
+
+[node name="LookDown" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LookDownKeys" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/LookDown"]
+layout_mode = 2
+
+[node name="DownArrow" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookDown/LookDownKeys"]
+layout_mode = 2
+text = "󰛀 "
+
+[node name="S" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookDown/LookDownKeys"]
+layout_mode = 2
+text = "󰬚 "
+
+[node name="LookDownAction" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/LookDown"]
+layout_mode = 2
+text = "Down direction (dash)"
+
+[node name="RightColumn2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_qyqpk")
+
+[node name="GoRight" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Keys2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn2/GoRight"]
+layout_mode = 2
+
+[node name="Keys" type="Label" parent="MarginContainer/HBoxContainer/RightColumn2/GoRight/Keys2"]
+layout_mode = 2
+text = "󰜵  󰬋"
+
+[node name="Action" type="Label" parent="MarginContainer/HBoxContainer/RightColumn2/GoRight"]
+layout_mode = 2
+text = "Move to the right"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/RightColumn2/VBoxContainer2"]
+layout_mode = 2
+text = "󰯴  Move to the left"
+
+[node name="MinTimer" type="Timer" parent="."]
+wait_time = 0.5
