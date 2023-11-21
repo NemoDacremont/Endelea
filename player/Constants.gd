@@ -32,6 +32,7 @@ const WIDTH = 48
 @export var LOOK_UP_ACTION_NAME: String = "look_up"
 @export var LOOK_DOWN_ACTION_NAME: String = "look_down"
 @export var DASH_ACTION_NAME: String = "dash"
+@export var RESET_POSITION_ACTION_NAME: String = "reset_position"
 
 
 #
