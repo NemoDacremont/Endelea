@@ -1,21 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://4tdj4shdbtft"]
+[gd_scene load_steps=2 format=3 uid="uid://4tdj4shdbtft"]
 
-[ext_resource type="FontFile" uid="uid://8h3bs8j2ghtb" path="res://assets/fonts/JimNightshade-Regular.ttf" id="1_ba1a0"]
-[ext_resource type="PackedScene" uid="uid://b57sr0tds5iub" path="res://player/player.tscn" id="2_w2cqm"]
-[ext_resource type="PackedScene" uid="uid://bppu2h75e6xkn" path="res://tmp_map.tscn" id="3_yrdep"]
+[ext_resource type="PackedScene" uid="uid://dw4pj7dfhho2e" path="res://main_menu/main_menu.tscn" id="1_2v14o"]
 
-[node name="Main" type="Node2D"]
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="."]
-offset_left = 293.0
-offset_top = 152.0
-offset_right = 838.0
-offset_bottom = 454.0
-theme_override_fonts/font = ExtResource("1_ba1a0")
-theme_override_font_sizes/font_size = 64
-text = "Hello World! Bizarre la font"
-
-[node name="Player" parent="." instance=ExtResource("2_w2cqm")]
-position = Vector2(485, -653)
-
-[node name="Map" parent="." instance=ExtResource("3_yrdep")]
+[node name="MainMenu" parent="." instance=ExtResource("1_2v14o")]
+layout_mode = 1
