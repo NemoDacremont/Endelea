@@ -8,19 +8,19 @@
 [ext_resource type="Texture2D" uid="uid://fyw40thmja6f" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/player land 48x48.png" id="4_icqfs"]
 [ext_resource type="Texture2D" uid="uid://b40po52fa84yr" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/run cycle 48x48.png" id="6_ovfpc"]
 [ext_resource type="Texture2D" uid="uid://su6pef4tiptd" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/Wall Slide 48x48.png" id="7_0j5nc"]
-[ext_resource type="Script" path="res://player/StateMachine.gd" id="9_4qcd0"]
-[ext_resource type="Script" path="res://player/Jump.gd" id="9_pdr8x"]
-[ext_resource type="Script" path="res://player/Pre_Jump.gd" id="11_xug1l"]
-[ext_resource type="Script" path="res://player/Idle.gd" id="11_y5m27"]
-[ext_resource type="Script" path="res://player/Jumping.gd" id="12_bja5w"]
-[ext_resource type="Script" path="res://player/Dash.gd" id="12_niwyj"]
+[ext_resource type="Script" path="res://player/StateMachine/StateMachine.gd" id="9_ckpey"]
+[ext_resource type="Script" path="res://player/StateMachine/Jump/Jump.gd" id="10_56c1o"]
+[ext_resource type="Script" path="res://player/StateMachine/Jump/Pre_Jump.gd" id="11_5r01s"]
+[ext_resource type="Script" path="res://player/StateMachine/Jump/Jumping.gd" id="12_esqat"]
 [ext_resource type="Script" path="res://player/Constants.gd" id="13_blxh5"]
-[ext_resource type="Script" path="res://player/PreDash.gd" id="15_kv6hf"]
-[ext_resource type="Script" path="res://player/Dashing.gd" id="16_y1wo4"]
-[ext_resource type="Script" path="res://player/WallJump.gd" id="17_igdat"]
-[ext_resource type="Script" path="res://player/PreWallJump.gd" id="18_j53ga"]
-[ext_resource type="Script" path="res://player/WallJumping.gd" id="19_ioofa"]
-[ext_resource type="Script" path="res://player/CoyoteJump.gd" id="20_kam2n"]
+[ext_resource type="Script" path="res://player/StateMachine/Jump/CoyoteJump.gd" id="13_fuugw"]
+[ext_resource type="Script" path="res://player/StateMachine/Idle/Idle.gd" id="14_3h47s"]
+[ext_resource type="Script" path="res://player/StateMachine/Dash/Dash.gd" id="15_d2d0r"]
+[ext_resource type="Script" path="res://player/StateMachine/Dash/Dashing.gd" id="16_p0yi8"]
+[ext_resource type="Script" path="res://player/StateMachine/Dash/PreDash.gd" id="17_8n5v1"]
+[ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJump.gd" id="18_dbsn6"]
+[ext_resource type="Script" path="res://player/StateMachine/WallJump/PreWallJump.gd" id="19_nqwwj"]
+[ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJumping.gd" id="20_y8us7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
 custom_solver_bias = 1.0
@@ -367,19 +367,19 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("9_4qcd0")
+script = ExtResource("9_ckpey")
 
 [node name="Jump" type="Node" parent="StateMachine"]
-script = ExtResource("9_pdr8x")
+script = ExtResource("10_56c1o")
 
 [node name="Pre_Jump" type="Node" parent="StateMachine/Jump"]
-script = ExtResource("11_xug1l")
+script = ExtResource("11_5r01s")
 
 [node name="Jumping" type="Node" parent="StateMachine/Jump"]
-script = ExtResource("12_bja5w")
+script = ExtResource("12_esqat")
 
 [node name="CoyoteJump" type="Node" parent="StateMachine/Jump"]
-script = ExtResource("20_kam2n")
+script = ExtResource("13_fuugw")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="StateMachine/Jump/CoyoteJump"]
 one_shot = true
@@ -388,25 +388,25 @@ one_shot = true
 one_shot = true
 
 [node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("11_y5m27")
+script = ExtResource("14_3h47s")
 
 [node name="Dash" type="Node" parent="StateMachine"]
-script = ExtResource("12_niwyj")
+script = ExtResource("15_d2d0r")
 
 [node name="Dashing" type="Node" parent="StateMachine/Dash"]
-script = ExtResource("16_y1wo4")
+script = ExtResource("16_p0yi8")
 
 [node name="PreDash" type="Node" parent="StateMachine/Dash"]
-script = ExtResource("15_kv6hf")
+script = ExtResource("17_8n5v1")
 
 [node name="WallJump" type="Node" parent="StateMachine"]
-script = ExtResource("17_igdat")
+script = ExtResource("18_dbsn6")
 
 [node name="PreWallJump" type="Node" parent="StateMachine/WallJump"]
-script = ExtResource("18_j53ga")
+script = ExtResource("19_nqwwj")
 
 [node name="WallJumping" type="Node" parent="StateMachine/WallJump"]
-script = ExtResource("19_ioofa")
+script = ExtResource("20_y8us7")
 
 [node name="WallJumpTimer" type="Timer" parent="StateMachine/WallJump"]
 wait_time = 0.1
