@@ -4,7 +4,7 @@ signal exit_control_screen
 
 const MIN_TIMER_DURATION: float = 1  # .5s before enabling quitting
 const BEFORE_TEXT_RATIO_DURATION: float = .5  # .5s before enabling quitting
-const FADING_DURATION: float = .5  # .5s before enabling quitting
+const FADING_DURATION: float = 1  # .5s before enabling quitting
 
 var min_timer: Timer
 var before_text_ratio: Timer
@@ -39,8 +39,8 @@ func _input(event):
 	if (can_key_press && event is InputEventKey):
 		can_key_press = false
 
-		tween_ratio = get_tree().create_tween()
-		tween_ratio.tween_property(fading, "color", Color(0.875, 0.973, 1, 1), FADING_DURATION)
+		tween_fading= get_tree().create_tween()
+		tween_fading.tween_property(fading, "color", Color(0.875, 0.973, 1, 1), FADING_DURATION)
 		fading_timer.start(FADING_DURATION)
 
 
@@ -58,5 +58,5 @@ func _on_before_text_ratio_timeout():
 
 func _on_fading_timer_timeout():
 	emit_signal("exit_control_screen")
-	get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_file("res://tutorial_level/tutorial_level.tscn")
 

@@ -1,7 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjwd7ou4lhti3"]
 
 [ext_resource type="Script" path="res://controls_screen/controls_screen.gd" id="1_y18n3"]
-[ext_resource type="Theme" uid="uid://bwxstli11iw71" path="res://controls_screen/controls_screen.tres" id="2_kdwaf"]
+
+[sub_resource type="Theme" id="Theme_vpf2r"]
+Label/constants/outline_size = -1
+Label/font_sizes/font_size = 32
 
 [node name="ControlsScreen" type="Control"]
 layout_mode = 3
@@ -41,7 +44,7 @@ theme_override_constants/margin_bottom = 12
 
 [node name="Rows" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme = ExtResource("2_kdwaf")
+theme = SubResource("Theme_vpf2r")
 theme_override_constants/separation = 100
 
 [node name="ControlsColumns" type="HBoxContainer" parent="MarginContainer/Rows"]
