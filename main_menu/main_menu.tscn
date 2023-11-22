@@ -1,10 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://dw4pj7dfhho2e"]
+[gd_scene load_steps=9 format=3 uid="uid://dw4pj7dfhho2e"]
 
 [ext_resource type="Script" path="res://main_menu/MainMenu.gd" id="1_bitjo"]
+[ext_resource type="Theme" uid="uid://c4cyyeqpmhipp" path="res://theme.tres" id="2_gn37x"]
+[ext_resource type="FontFile" uid="uid://dgwapumtu5b3g" path="res://assets/fonts/Arapey-Regular.ttf" id="2_q80ac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjqjs"]
+bg_color = Color(0.317647, 0.333333, 0.486275, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 20.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5m1xq"]
+bg_color = Color(0.447059, 0.521569, 0.627451, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 20.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0csm"]
+content_margin_top = 0.0
+bg_color = Color(0.960784, 0.941176, 0.921569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 20.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3gya"]
+bg_color = Color(0.317647, 0.333333, 0.486275, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 20.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
 
 [sub_resource type="Theme" id="Theme_aho5u"]
-Button/constants/outline_size = 1
+Button/colors/font_color = Color(0, 0.0823529, 0.176471, 1)
+Button/colors/font_focus_color = Color(0.960784, 0.941176, 0.921569, 1)
+Button/colors/font_hover_color = Color(0.960784, 0.941176, 0.921569, 1)
+Button/constants/outline_size = 0
 Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("2_q80ac")
+Button/styles/focus = SubResource("StyleBoxFlat_bjqjs")
+Button/styles/hover = SubResource("StyleBoxFlat_5m1xq")
+Button/styles/normal = SubResource("StyleBoxFlat_i0csm")
+Button/styles/pressed = SubResource("StyleBoxFlat_b3gya")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,6 +70,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bitjo")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0823529, 0.176471, 1)
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -22,30 +86,41 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -50.5
-offset_right = 35.0
-offset_bottom = 50.5
+offset_left = -70.5
+offset_top = -104.0
+offset_right = 70.5
+offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme = SubResource("Theme_aho5u")
-theme_override_constants/separation = 12
+theme_override_constants/separation = 100
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_gn37x")
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_aho5u")
+theme_override_constants/separation = 50
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
