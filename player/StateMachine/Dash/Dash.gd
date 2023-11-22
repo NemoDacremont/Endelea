@@ -107,7 +107,7 @@ func process(delta: float, _player: CharacterBody2D):
 
 
 func background_process():
-	if (dash_counter != 0 && player_node.is_on_floor()):
+	if player_node.is_on_floor():
 		emit_signal("reset_dash")
 
 

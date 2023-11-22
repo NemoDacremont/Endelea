@@ -11,17 +11,23 @@ static var wall_jump_state: Wall_Jump_State = Wall_Jump_State.NONE
 @onready var player_node: CharacterBody2D = find_parent("Player")
 @onready var dash: Node = get_node("../Dash")
 
+@onready var ray_cast_left: RayCast2D = $RayCastLeft
+@onready var ray_cast_right: RayCast2D = $RayCastRight
+
 var wall_jump_direction: Vector2 = Vector2.UP
 
 
 func is_triggered() -> bool:
 	if (player_node.is_on_wall_only()):
-		# Wall jump to the right
-		if (Input.is_action_pressed(PlayerConstants.MOVE_LEFT_ACTION_NAME)):
+		# Wall jump to the rightZ
+		# print("TEST_RAYCAT ", ray_cast_left.is_colliding(), " ", ray_cast_left.collide_with_areas)
+		if (ray_cast_left.is_colliding()):
+			print("COLLIDES LEFT")
 			wall_jump_direction = Vector2(-1, 1.5)
 
 		# Wall jump to the left
-		elif (Input.is_action_pressed(PlayerConstants.MOVE_RIGHT_ACTION_NAME)):
+		elif (ray_cast_right.is_colliding()):
+			print("COLLIDES RIGHT")
 			wall_jump_direction = Vector2(1, 1.5)
 
 		else:

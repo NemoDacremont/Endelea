@@ -298,7 +298,6 @@ metadata/_edit_lock_ = true
 sprite_frames = SubResource("SpriteFrames_k4dxl")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.860349
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -352,6 +351,16 @@ script = ExtResource("20_y8us7")
 [node name="WallJumpTimer" type="Timer" parent="StateMachine/WallJump"]
 wait_time = 0.1
 one_shot = true
+
+[node name="RayCastRight" type="RayCast2D" parent="StateMachine/WallJump"]
+exclude_parent = false
+target_position = Vector2(50, 0)
+collide_with_areas = true
+
+[node name="RayCastLeft" type="RayCast2D" parent="StateMachine/WallJump"]
+exclude_parent = false
+target_position = Vector2(-50, 0)
+collide_with_areas = true
 
 [node name="PlayerConstants" type="Node" parent="."]
 script = ExtResource("13_blxh5")

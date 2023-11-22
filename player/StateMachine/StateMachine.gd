@@ -69,7 +69,7 @@ func push_state(new_state: States) -> void:
 		state = new_state
 
 
-func physics_process(delta):
+func _physics_process(delta):
 	states_nodes[state].physics_process(delta, player)
 
 	# Background to handle tasks like dash reset
@@ -77,6 +77,6 @@ func physics_process(delta):
 		node.background_process()
 
 
-func process(delta):
+func _process(delta):
 	states_nodes[state].process(delta, player)
 
