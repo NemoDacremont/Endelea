@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=58 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Texture2D" uid="uid://bjqwf6aehd85j" path="res://assets/Asset_Pack_random_char/Asset Pack-V3/PlayerWalk/PlayerWalk 48x48.png" id="2_2m2i5"]
@@ -21,6 +21,8 @@
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJump.gd" id="18_dbsn6"]
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/PreWallJump.gd" id="19_nqwwj"]
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJumping.gd" id="20_y8us7"]
+[ext_resource type="Script" path="res://player/RayCastRight.gd" id="21_m05n1"]
+[ext_resource type="Script" path="res://player/RayCastLeft.gd" id="22_gsgl6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rihco"]
 atlas = ExtResource("2_wg63e")
@@ -291,8 +293,8 @@ height = 56.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_gocl4")
-metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k4dxl")
@@ -353,14 +355,16 @@ wait_time = 0.1
 one_shot = true
 
 [node name="RayCastRight" type="RayCast2D" parent="StateMachine/WallJump"]
-exclude_parent = false
-target_position = Vector2(50, 0)
+show_behind_parent = true
+top_level = true
+target_position = Vector2(20, 0)
 collide_with_areas = true
+script = ExtResource("21_m05n1")
 
 [node name="RayCastLeft" type="RayCast2D" parent="StateMachine/WallJump"]
-exclude_parent = false
-target_position = Vector2(-50, 0)
+target_position = Vector2(-20, 0)
 collide_with_areas = true
+script = ExtResource("22_gsgl6")
 
 [node name="PlayerConstants" type="Node" parent="."]
 script = ExtResource("13_blxh5")

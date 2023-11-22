@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpexrccyxv8mv"]
+[gd_scene load_steps=5 format=3 uid="uid://cpexrccyxv8mv"]
 
 [ext_resource type="Texture2D" uid="uid://ca5wbx6fuuosj" path="res://assets/Tilemap.png" id="1_14bq2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_16wrs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mxm30"]
 texture = ExtResource("1_14bq2")
@@ -199,6 +201,7 @@ texture_region_size = Vector2i(8, 8)
 [sub_resource type="TileSet" id="TileSet_c7im6"]
 tile_size = Vector2i(8, 8)
 physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_16wrs")
 sources/1 = SubResource("TileSetAtlasSource_mxm30")
 
 [node name="tutorial_level_map" type="Node2D"]

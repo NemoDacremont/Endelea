@@ -77,7 +77,7 @@ const MAX_DASH_COUNTER: int = 1
 
 # Wall Jump
 ## PreWallJump
-const PRE_WALL_JUMP_DURATION: float = 0.025  # in sec
+const PRE_WALL_JUMP_DURATION: float = 0.05  # in sec
 const PRE_WALL_JUMP_VELOCITY_MULTIPLIER: float = 0.25
 
 

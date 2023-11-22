@@ -22,13 +22,11 @@ func is_triggered() -> bool:
 		# Wall jump to the rightZ
 		# print("TEST_RAYCAT ", ray_cast_left.is_colliding(), " ", ray_cast_left.collide_with_areas)
 		if (ray_cast_left.is_colliding()):
-			print("COLLIDES LEFT")
-			wall_jump_direction = Vector2(-1, 1.5)
+			wall_jump_direction = Vector2(-1, 2)
 
 		# Wall jump to the left
 		elif (ray_cast_right.is_colliding()):
-			print("COLLIDES RIGHT")
-			wall_jump_direction = Vector2(1, 1.5)
+			wall_jump_direction = Vector2(1, 2)
 
 		else:
 			return false
