@@ -100,9 +100,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 	if (dash.is_triggered()):  # override jump state if dash is used
 		state_machine.push_state(state_machine.States.DASH)
 
-	elif (is_triggered()):  # buffer jump if needed
-		state_machine.push_state(state_machine.States.JUMP)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process(_delta: float, _player: CharacterBody2D):

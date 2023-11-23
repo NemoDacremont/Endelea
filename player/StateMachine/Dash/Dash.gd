@@ -59,6 +59,7 @@ func can_start() -> bool:
 
 func start():
 	dash_state = Dash_State.PRE_DASH
+	pre_dash.start()
 	dash_counter += 1
 
 

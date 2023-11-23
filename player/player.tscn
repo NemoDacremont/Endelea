@@ -1,6 +1,7 @@
-[gd_scene load_steps=51 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=53 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
+[ext_resource type="Shader" path="res://player/player.gdshader" id="2_eo2si"]
 [ext_resource type="Texture2D" uid="uid://fyw40thmja6f" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/player land 48x48.png" id="4_icqfs"]
 [ext_resource type="Texture2D" uid="uid://dh46d6pevjf40" path="res://assets/player/Jump.png" id="4_tp6am"]
 [ext_resource type="Texture2D" uid="uid://pc8lodlfeqsy" path="res://assets/player/Run.png" id="6_8mjl1"]
@@ -23,6 +24,12 @@
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJumping.gd" id="20_y8us7"]
 [ext_resource type="Script" path="res://player/RayCastRight.gd" id="21_m05n1"]
 [ext_resource type="Script" path="res://player/RayCastLeft.gd" id="22_gsgl6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8pxm4"]
+shader = ExtResource("2_eo2si")
+shader_parameter/scale = 1.0
+shader_parameter/color = Color(1, 0.831373, 0.87451, 1)
+shader_parameter/flashState = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2qfff"]
 atlas = ExtResource("9_imr46")
@@ -192,6 +199,11 @@ animations = [{
 "speed": 0.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
+custom_solver_bias = 1.0
+radius = 11.0
+height = 56.0
+
 [sub_resource type="Curve" id="Curve_lm82r"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 1.4, 0.0, 0, 0]
 point_count = 2
@@ -243,27 +255,32 @@ orbit_velocity_max = 0.0
 scale_max = 3.0
 color_ramp = ExtResource("11_vf784")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al143"]
-custom_solver_bias = 1.0
-radius = 11.0
-height = 56.0
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_gocl4")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_8pxm4")
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Jump"
+animation = &"Run"
 autoplay = "Idle"
+frame = 5
+frame_progress = 0.280878
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_al143")
+
+[node name="PlayerConstants" type="Node" parent="."]
+script = ExtResource("13_blxh5")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("9_ckpey")
@@ -343,13 +360,6 @@ script = ExtResource("21_m05n1")
 target_position = Vector2(-20, 0)
 collide_with_areas = true
 script = ExtResource("22_gsgl6")
-
-[node name="PlayerConstants" type="Node" parent="."]
-script = ExtResource("13_blxh5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CapsuleShape2D_al143")
 
 [connection signal="timeout" from="StateMachine/Jump/Jumping/JumpParticlesTimer" to="StateMachine/Jump/Jumping" method="_on_jump_particles_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Jump/CoyoteJump/CoyoteJumpTimer" to="StateMachine/Jump/CoyoteJump" method="_on_coyote_jump_timer_timeout"]

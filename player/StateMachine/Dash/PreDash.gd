@@ -93,8 +93,9 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 func start():
 	dash_tween = get_tree().create_tween()
-	dash_tween.tween_property(animationNode, "scale", Vector2(1, .75), PlayerConstants.PRE_JUMP_DURATION / 2)
-	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_JUMP_DURATION / 2)
+	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_DASH_DURATION).set_ease(Tween.EASE_IN)
+	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_DASH_DURATION / 2).set_ease(Tween.EASE_IN)
+	dash_tween.tween_property(animationNode, "scale", Vector2(1, 1), PlayerConstants.PRE_DASH_DURATION).set_ease(Tween.EASE_OUT)
 
 
 func process(_delta):
