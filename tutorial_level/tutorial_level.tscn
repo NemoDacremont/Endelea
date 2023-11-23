@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dplk7o3h2852t"]
+[gd_scene load_steps=6 format=3 uid="uid://dplk7o3h2852t"]
 
 [ext_resource type="Script" path="res://tutorial_level/tutorial_level.gd" id="1_pyyxn"]
 [ext_resource type="PackedScene" uid="uid://cpexrccyxv8mv" path="res://tutorial_level/map/tutorial_level_map.tscn" id="2_s47r2"]
 [ext_resource type="PackedScene" uid="uid://b57sr0tds5iub" path="res://player/player.tscn" id="3_kluvr"]
+[ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="4_a1qvb"]
+[ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://pause_screen/pause_screen.tscn" id="5_qkyfm"]
 
 [node name="TutorialLevel" type="Control"]
 layout_mode = 3
@@ -13,15 +15,40 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pyyxn")
 
+[node name="Background" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Level" type="Node2D" parent="."]
 
 [node name="tutorial_level_map" parent="Level" instance=ExtResource("2_s47r2")]
-position = Vector2(214, 11)
+position = Vector2(-119, 8)
 
 [node name="Player" parent="Level" instance=ExtResource("3_kluvr")]
-position = Vector2(569, 335)
+position = Vector2(176, 428)
 
-[node name="Fading" type="ColorRect" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Fog" parent="UI" instance=ExtResource("4_a1qvb")]
+
+[node name="Pause_Screen" parent="UI" instance=ExtResource("5_qkyfm")]
+visible = false
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fading" type="ColorRect" parent="UI/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -30,3 +57,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.88, 0.97, 1, 1)
+
+[connection signal="pause" from="Level/Player" to="." method="_on_player_pause"]

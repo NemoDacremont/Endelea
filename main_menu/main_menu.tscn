@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw4pj7dfhho2e"]
+[gd_scene load_steps=10 format=3 uid="uid://dw4pj7dfhho2e"]
 
 [ext_resource type="Script" path="res://main_menu/MainMenu.gd" id="1_bitjo"]
+[ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="2_ge1xv"]
 [ext_resource type="Theme" uid="uid://c4cyyeqpmhipp" path="res://theme.tres" id="2_gn37x"]
 [ext_resource type="FontFile" uid="uid://dgwapumtu5b3g" path="res://assets/fonts/Arapey-Regular.ttf" id="2_q80ac"]
 
@@ -57,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bitjo")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,6 +66,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.0823529, 0.176471, 1)
+
+[node name="Fog" parent="." instance=ExtResource("2_ge1xv")]
+layout_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

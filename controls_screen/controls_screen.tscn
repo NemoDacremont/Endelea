@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjwd7ou4lhti3"]
+[gd_scene load_steps=6 format=3 uid="uid://cjwd7ou4lhti3"]
 
 [ext_resource type="Script" path="res://controls_screen/controls_screen.gd" id="1_y18n3"]
+[ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="2_4asr8"]
 [ext_resource type="FontFile" uid="uid://bp2i0rh5q7uc0" path="res://assets/fonts/SymbolsNerdFont-Regular.ttf" id="2_we44o"]
 [ext_resource type="FontFile" uid="uid://dgwapumtu5b3g" path="res://assets/fonts/Arapey-Regular.ttf" id="3_sno1l"]
 
@@ -27,6 +28,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.0823529, 0.176471, 1)
+
+[node name="Fog" parent="." instance=ExtResource("2_4asr8")]
+layout_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
