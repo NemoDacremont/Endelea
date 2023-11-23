@@ -19,7 +19,7 @@ script = ExtResource("1_pyyxn")
 position = Vector2(214, 11)
 
 [node name="Player" parent="Level" instance=ExtResource("3_kluvr")]
-position = Vector2(485, 215)
+position = Vector2(569, 335)
 
 [node name="Fading" type="ColorRect" parent="."]
 visible = false

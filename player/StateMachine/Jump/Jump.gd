@@ -62,6 +62,7 @@ func start() -> void:
 		set the right jump state machine initial state
 	"""
 	jump_state = Jump_State.PRE_JUMP
+	pre_jump.start()
 	coyote_jump.force_coyote_availability(false)
 
 

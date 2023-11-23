@@ -24,6 +24,9 @@ static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var tmp_velocity: Vector2 = Vector2.ZERO
 
 
+@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
+static var pre_jump_tween: Tween
+
 
 func physics_process(delta: float, player: CharacterBody2D):
 	player.acceleration = Vector2.ZERO
@@ -73,6 +76,13 @@ func physics_process(delta: float, player: CharacterBody2D):
 		pre_jump_time = 0
 		jump.get_to_next_state()
 
+	print(animationNode.scale)
+
+
+func start():
+	pre_jump_tween = get_tree().create_tween()
+	pre_jump_tween.tween_property(animationNode, "scale", Vector2(1, .75), PlayerConstants.PRE_JUMP_DURATION / 2)
+	pre_jump_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_JUMP_DURATION / 2)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

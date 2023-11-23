@@ -19,6 +19,8 @@ static var air_friction_force: Vector2 = Vector2.ZERO
 static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
+@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
+static var dash_tween: Tween
 
 func capture_inputs():
 	is_moving_right = false
@@ -87,6 +89,12 @@ func physics_process(delta: float, player: CharacterBody2D):
 		pre_dash_time = 0
 		tmp_velocity = Vector2.ZERO
 		dash.get_to_next_state()
+
+
+func start():
+	dash_tween = get_tree().create_tween()
+	dash_tween.tween_property(animationNode, "scale", Vector2(1, .75), PlayerConstants.PRE_JUMP_DURATION / 2)
+	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_JUMP_DURATION / 2)
 
 
 func process(_delta):

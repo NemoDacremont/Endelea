@@ -19,8 +19,8 @@ const COYOTE_JUMP_DURATION: float = 0.075
 #  Dimensions
 #
 
-const HEIGHT = 48
-const WIDTH = 48
+const HEIGHT = 64
+const WIDTH = 64
 
 #
 #  Actions
@@ -47,7 +47,7 @@ const WALL_INTERACTION_NORM: float = GRAVITY / 2
 
 # Jump
 ## PreJump
-const PRE_JUMP_DURATION: float = 0.025  # in sec
+const PRE_JUMP_DURATION: float = .075  # in sec
 const PRE_JUMP_VELOCITY_MULTIPLIER: float = 0.25
 
 # A bit dirty way to handle things i think, im lazy

@@ -9,6 +9,8 @@ extends Node
 @onready var player_node: CharacterBody2D = find_parent("Player")
 @onready var animation_node: AnimatedSprite2D = get_node("../../Sprite")
 
+@onready var run_left_particles: GPUParticles2D = $RunLeftParticles
+@onready var run_right_particles: GPUParticles2D = $RunRightParticles
 
 # 
 static var was_on_wall: bool = false
@@ -71,11 +73,19 @@ func start() -> void:
 func animation_process() -> void:
 	frame = -1
 	animation = PlayerConstants.IDLE_ANIMATION_NAME
+	run_right_particles.emitting = false
+	run_left_particles.emitting = false
+
 
 	if (is_moving_right):
 		animation_node.flip_h = false
+		run_right_particles.emitting = true
+		run_right_particles.position = player_node.position + Vector2(0, 28)
+
 	elif (is_moving_left):
 		animation_node.flip_h = true
+		run_left_particles.emitting = true
+		run_left_particles.position = player_node.position + Vector2(0, 28)
 
 	if (is_moving_left or is_moving_right):
 		animation = PlayerConstants.RUN_ANIMATION_NAME
