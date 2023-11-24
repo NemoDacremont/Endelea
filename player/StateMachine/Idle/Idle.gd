@@ -33,6 +33,7 @@ static var frame: int = -1;
 
 
 static var wall_interaction_force: Vector2 = Vector2.UP
+static var wall_interaction_fall_speed_multiplier: float = 1.0
 
 
 
@@ -120,6 +121,7 @@ func animation_process() -> void:
 
 func physics_process(delta: float, player: CharacterBody2D) -> void:
 	player.acceleration = Vector2.ZERO
+	wall_interaction_fall_speed_multiplier = 1.0
 	capture_inputs()
 
 	# Update run force direction

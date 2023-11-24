@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dplk7o3h2852t"]
+[gd_scene load_steps=7 format=3 uid="uid://dplk7o3h2852t"]
 
 [ext_resource type="Script" path="res://tutorial_level/tutorial_level.gd" id="1_pyyxn"]
 [ext_resource type="PackedScene" uid="uid://cpexrccyxv8mv" path="res://tutorial_level/map/tutorial_level_map.tscn" id="2_s47r2"]
 [ext_resource type="PackedScene" uid="uid://b57sr0tds5iub" path="res://player/player.tscn" id="3_kluvr"]
 [ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="4_a1qvb"]
 [ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://pause_screen/pause_screen.tscn" id="5_qkyfm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6nog8"]
+size = Vector2(11419, 912)
 
 [node name="TutorialLevel" type="Control"]
 layout_mode = 3
@@ -14,6 +17,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pyyxn")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.711, 0.736954, 0.734409, 1)
 
 [node name="Background" type="CanvasLayer" parent="."]
 
@@ -30,15 +43,26 @@ grow_vertical = 2
 [node name="tutorial_level_map" parent="Level" instance=ExtResource("2_s47r2")]
 position = Vector2(-119, 8)
 
+[node name="FirstPlayerPosition" type="Marker2D" parent="Level"]
+position = Vector2(203, 410)
+
 [node name="Player" parent="Level" instance=ExtResource("3_kluvr")]
-position = Vector2(176, 428)
+position = Vector2(202, 408)
+
+[node name="Area2D" type="Area2D" parent="Level"]
+position = Vector2(-406, 778)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Area2D"]
+position = Vector2(4952, 687)
+shape = SubResource("RectangleShape2D_6nog8")
+
+[node name="RespawnTimer" type="Timer" parent="Level"]
+one_shot = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Fog" parent="UI" instance=ExtResource("4_a1qvb")]
-
-[node name="Pause_Screen" parent="UI" instance=ExtResource("5_qkyfm")]
-visible = false
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 3
@@ -58,4 +82,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.88, 0.97, 1, 1)
 
+[node name="Pause_Screen" parent="UI" instance=ExtResource("5_qkyfm")]
+visible = false
+
 [connection signal="pause" from="Level/Player" to="." method="_on_player_pause"]
+[connection signal="body_shape_entered" from="Level/Area2D" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="timeout" from="Level/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

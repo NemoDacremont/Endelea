@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfsc3qvxf5inh"]
+[gd_scene load_steps=5 format=3 uid="uid://cfsc3qvxf5inh"]
 
+[ext_resource type="Script" path="res://pause_screen/pause_screen.gd" id="1_6xypn"]
 [ext_resource type="Shader" path="res://pause_screen/pause_screen.gdshader" id="1_d5ntk"]
+[ext_resource type="Theme" uid="uid://tuvxeegbtmjf" path="res://main_menu/main_menu.tres" id="3_7cieq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5q5so"]
 shader = ExtResource("1_d5ntk")
+shader_parameter/speed = 0.7
 shader_parameter/blur_type = 1
 shader_parameter/blur_amount = 8
-shader_parameter/blur_radius = 0.0
+shader_parameter/blur_radius = 1.0
 shader_parameter/blur_direction = Vector2(1, 1)
 
 [node name="Pause_Screen" type="Control"]
@@ -16,8 +19,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6xypn")
 
 [node name="Blured_Background" type="ColorRect" parent="."]
+texture_repeat = 2
 material = SubResource("ShaderMaterial_5q5so")
 layout_mode = 1
 anchors_preset = 15
@@ -26,15 +31,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
-offset_top = 608.0
-offset_right = 64.0
-offset_bottom = 648.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -342.0
+offset_right = 226.0
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme = ExtResource("3_7cieq")
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Paused"
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Pause !!!"
+
+[node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Return to dream"
+
+[node name="Controls" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Show Controls"
+
+[node name="Main menu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main menu"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Main menu" to="." method="_on_main_menu_pressed"]

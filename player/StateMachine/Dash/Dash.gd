@@ -23,6 +23,10 @@ static var dash_state: Dash_State = Dash_State.NONE
 
 @onready var player_node: CharacterBody2D = find_parent("Player")
 
+func force_reset_dash_counter():
+		dash_counter = 0
+
+
 
 func is_triggered() -> bool:
 	if Input.is_action_just_pressed(PlayerConstants.DASH_ACTION_NAME):
@@ -66,6 +70,7 @@ func start():
 func get_to_next_state():
 	if dash_state == Dash_State.PRE_DASH:
 		dash_state = Dash_State.DASHING
+		dashing.start()
 
 	elif dash_state == Dash_State.DASHING:
 		state_machine.push_state(state_machine.States.IDLE)
