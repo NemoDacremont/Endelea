@@ -9,8 +9,7 @@ uniform float speed = 1.0;
 void fragment() {
 	vec2 uv = vec2(UV.x + TIME * speed, UV.y);
 	vec4 noiseColor = texture(noise, uv);
-
 	
 	COLOR = mix(noiseColor, color, flashState);
-	COLOR.a *= noiseColor.a / 8.0;
+	COLOR.a *= noiseColor.a;
 }

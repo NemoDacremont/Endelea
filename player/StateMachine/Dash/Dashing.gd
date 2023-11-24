@@ -6,6 +6,16 @@ extends Node
 
 static var dashing_time: float = 0
 
+@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
+@onready var player_node: CharacterBody2D = find_parent("Player")
+
+
+func animation_process():
+	if (player_node.is_on_floor()):
+		animationNode.play(PlayerConstants.RUN_ANIMATION_NAME)
+	else:
+		animationNode.play(PlayerConstants.RUN_ANIMATION_NAME)
+		animationNode.frame = 0
 
 
 func physics_process(delta: float, player: CharacterBody2D):
@@ -24,6 +34,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 
 
 func process(_delta):
-	pass
+	animation_process()
 
 

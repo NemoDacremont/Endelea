@@ -1,10 +1,11 @@
-[gd_scene load_steps=53 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=55 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="2_eo2si"]
 [ext_resource type="Texture2D" uid="uid://fyw40thmja6f" path="res://assets/Asset_Pack_random_char/Asset Pack-V1/Sprite Sheets/player land 48x48.png" id="4_icqfs"]
 [ext_resource type="Texture2D" uid="uid://dh46d6pevjf40" path="res://assets/player/Jump.png" id="4_tp6am"]
 [ext_resource type="Texture2D" uid="uid://pc8lodlfeqsy" path="res://assets/player/Run.png" id="6_8mjl1"]
+[ext_resource type="Texture2D" uid="uid://cck0pg0m81he4" path="res://assets/player/pre_dash_i_guess.png" id="6_cut0m"]
 [ext_resource type="Script" path="res://player/StateMachine/StateMachine.gd" id="9_ckpey"]
 [ext_resource type="Texture2D" uid="uid://dv8jowy8ccwv" path="res://assets/player/Idle.png" id="9_imr46"]
 [ext_resource type="Script" path="res://player/StateMachine/Jump/Jump.gd" id="10_56c1o"]
@@ -28,7 +29,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8pxm4"]
 shader = ExtResource("2_eo2si")
 shader_parameter/scale = 1.0
-shader_parameter/color = Color(1, 0.831373, 0.87451, 1)
+shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/flashState = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2qfff"]
@@ -74,6 +75,10 @@ region = Rect2(0, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s508k"]
 atlas = ExtResource("4_icqfs")
 region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fv6j"]
+atlas = ExtResource("6_cut0m")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aghlp"]
 atlas = ExtResource("6_8mjl1")
@@ -159,6 +164,14 @@ animations = [{
 }],
 "loop": false,
 "name": &"Land",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fv6j")
+}],
+"loop": true,
+"name": &"Pre_Dash",
 "speed": 0.0
 }, {
 "frames": [{
@@ -263,10 +276,8 @@ metadata/_edit_group_ = true
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_8pxm4")
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Run"
+animation = &"Land"
 autoplay = "Idle"
-frame = 5
-frame_progress = 0.280878
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)

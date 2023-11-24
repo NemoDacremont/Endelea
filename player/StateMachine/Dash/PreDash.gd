@@ -33,6 +33,10 @@ func capture_inputs():
 		is_moving_left = true
 
 
+func animation_process():
+	print(PlayerConstants.PRE_DASH_ANIMATION_NAME)
+	animationNode.play(PlayerConstants.PRE_DASH_ANIMATION_NAME)
+	animationNode.frame = PlayerConstants.PRE_DASH_ANIMATION_FRAME
 
 
 func physics_process(delta: float, player: CharacterBody2D):
@@ -91,15 +95,21 @@ func physics_process(delta: float, player: CharacterBody2D):
 		dash.get_to_next_state()
 
 
+# tween value automatically gets passed into this function
+func set_shader_value(value: float):
+	# in my case i'm tweening a shader on a texture rect, but you can use anything with a material on it
+	animationNode.material.set_shader_parameter("flashState", value);
+	print(value)
+
 func start():
 	dash_tween = get_tree().create_tween()
-	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_DASH_DURATION).set_ease(Tween.EASE_IN)
-	dash_tween.tween_property(animationNode, "scale", Vector2(.9, 1), PlayerConstants.PRE_DASH_DURATION / 2).set_ease(Tween.EASE_IN)
-	dash_tween.tween_property(animationNode, "scale", Vector2(1, 1), PlayerConstants.PRE_DASH_DURATION).set_ease(Tween.EASE_OUT)
+	# animationNode.material.set_shader_parameter("flashState", 1.0);
+	dash_tween.tween_method(set_shader_value, 0.0, 1.0, PlayerConstants.PRE_DASH_DURATION).set_ease(Tween.EASE_OUT); # args are: (method to call / start value / end value / duration of animation)
+	dash_tween.tween_method(set_shader_value, 1.0, 0.0, PlayerConstants.DASH_DURATION).set_delay(PlayerConstants.PRE_DASH_DURATION / 2).set_ease(Tween.EASE_IN); # args are: (method to call / start value / end value / duration of animation)
 
 
 func process(_delta):
-	pass
+	animation_process()
 
 
 

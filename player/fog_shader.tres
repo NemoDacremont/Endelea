@@ -1,6 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://m70l855rxwsb"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://m70l855rxwsb"]
 
 [ext_resource type="Shader" path="res://player/forground.gdshader" id="1_0l65n"]
+
+[sub_resource type="Gradient" id="Gradient_vhnqh"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_7same"]
 noise_type = 3
@@ -11,12 +14,13 @@ invert = true
 seamless = true
 seamless_blend_skirt = 1.0
 normalize = false
+color_ramp = SubResource("Gradient_vhnqh")
 noise = SubResource("FastNoiseLite_7same")
 
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_0l65n")
 shader_parameter/color = Color(1, 1, 1, 0)
-shader_parameter/flashState = 0.38
+shader_parameter/flashState = 0.631
 shader_parameter/speed = 0.04
 shader_parameter/noise = SubResource("NoiseTexture2D_3surb")

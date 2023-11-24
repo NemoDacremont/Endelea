@@ -28,6 +28,10 @@ static var tmp_velocity: Vector2 = Vector2.ZERO
 static var pre_jump_tween: Tween
 
 
+func animation_process():
+	pass
+
+
 func physics_process(delta: float, player: CharacterBody2D):
 	player.acceleration = Vector2.ZERO
 	
@@ -76,8 +80,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 		pre_jump_time = 0
 		jump.get_to_next_state()
 
-	print(animationNode.scale)
-
 
 func start():
 	pre_jump_tween = get_tree().create_tween()
@@ -87,7 +89,7 @@ func start():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process():
-	pass
+	animation_process()
 
 
 

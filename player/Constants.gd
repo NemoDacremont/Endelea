@@ -7,9 +7,13 @@ const STATE_BUFFER_TIMER_DURATION: float = .1
 const IDLE_ANIMATION_NAME: String = "Idle"
 const WALK_ANIMATION_NAME: String = "Walk"
 const RUN_ANIMATION_NAME: String = "Run"
+const PRE_JUMP_ANIMATION_NAME: String = "land"
 const JUMP_ANIMATION_NAME: String = "Jump"
+const PRE_DASH_ANIMATION_NAME: String = "Pre_Dash"
 const LAND_ANIMATION_NAME: String = "Land"
 const WALL_SLIDE_ANIMATION_NAME: String = "Wall_Slide"
+
+const PRE_DASH_ANIMATION_FRAME: int = 0
 
 const JUMP_ANIMATION_EPSILON: float = abs(JUMP_VELOCITY / 3)
 
