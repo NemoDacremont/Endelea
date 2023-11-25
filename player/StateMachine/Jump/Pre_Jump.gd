@@ -31,7 +31,6 @@ static var pre_jump_tween: Tween
 func animation_process():
 	animationNode.play(PlayerConstants.PRE_JUMP_ANIMATION_NAME)
 	animationNode.frame = PlayerConstants.PRE_JUMP_ANIMATION_FRAME
-	print("PREJUMP ANIMATION")
 
 
 func physics_process(delta: float, player: CharacterBody2D):

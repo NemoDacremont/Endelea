@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfsc3qvxf5inh"]
+[gd_scene load_steps=6 format=3 uid="uid://cfsc3qvxf5inh"]
 
 [ext_resource type="Script" path="res://pause_screen/pause_screen.gd" id="1_6xypn"]
 [ext_resource type="Shader" path="res://pause_screen/pause_screen.gdshader" id="1_d5ntk"]
 [ext_resource type="Theme" uid="uid://tuvxeegbtmjf" path="res://main_menu/main_menu.tres" id="3_7cieq"]
+[ext_resource type="PackedScene" uid="uid://cjwd7ou4lhti3" path="res://controls_screen/controls_screen.tscn" id="4_xpuf8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5q5so"]
 shader = ExtResource("1_d5ntk")
@@ -13,6 +14,7 @@ shader_parameter/blur_radius = 1.0
 shader_parameter/blur_direction = Vector2(1, 1)
 
 [node name="Pause_Screen" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,15 +64,31 @@ layout_mode = 2
 
 [node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "Return to dream"
 
 [node name="Controls" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "Show Controls"
 
 [node name="Main menu" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "Main menu"
 
+[node name="ControlsScreen" parent="." instance=ExtResource("4_xpuf8")]
+visible = false
+layout_mode = 1
+
+[node name="NoReturn" type="Timer" parent="."]
+
+[node name="MinTime" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Main menu" to="." method="_on_main_menu_pressed"]
+[connection signal="exit_control_screen" from="ControlsScreen" to="." method="_on_controls_screen_exit_control_screen"]
+[connection signal="timeout" from="NoReturn" to="." method="_on_no_return_timeout"]
+[connection signal="timeout" from="MinTime" to="." method="_on_min_time_timeout"]
