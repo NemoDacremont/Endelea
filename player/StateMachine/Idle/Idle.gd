@@ -150,8 +150,10 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 
 
 	wall_interaction_force = Vector2.ZERO
-	if (player.is_on_wall()):
-		wall_interaction_force = PlayerConstants.WALL_INTERACTION_NORM * (-sign(player.velocity.y)) * Vector2.DOWN
+	if (player.is_on_wall() and (is_moving_left or is_moving_right)):
+		if (player.velocity.y > 0):
+			wall_interaction_force = PlayerConstants.WALL_INTERACTION_NORM * (-sign(player.velocity.y)) * Vector2.DOWN
+		wall_interaction_fall_speed_multiplier = .5
 
 
 	# Update accel
@@ -163,7 +165,7 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 	# Integrate
 	player.velocity += player.acceleration * delta
 
-	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED)
+	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED * wall_interaction_fall_speed_multiplier)
 
 	# godot doing godot thigns
 	player.move_and_slide()

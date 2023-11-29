@@ -47,7 +47,6 @@ func _on_min_timer_timeout():
 
 
 	# Hide press_key, reveal it on min_timer end
-	print("RATIO!")
 	tween_ratio.tween_property(press_key, "visible_ratio", 1.0, .5)
 	before_text_ratio.start(BEFORE_TEXT_RATIO_DURATION)
 

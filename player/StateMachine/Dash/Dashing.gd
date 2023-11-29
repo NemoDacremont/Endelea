@@ -42,7 +42,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 func start():
 	particles.position = player_node.position
 	particles.emitting = true
-	print("Emit dash particle")
 
 
 func process(_delta):
