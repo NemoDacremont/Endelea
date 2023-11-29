@@ -7,24 +7,17 @@ extends Control
 @onready var fading_tween: Tween
 @onready var fading_timer: Timer = $CanvasLayer/FadingTimer
 
-@onready var enter_timer: Timer = $enter
-
 func _ready():
 	show()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	# fading.color = Color(0.875, 0.973, 1, 0)
-	# canvas_layer.hide()
 	get_tree().paused = false
 	Global.init()
 
-	fading.show()
-	fading.color = Color(0.875, 0.973, 1, 2)
-	fading_tween = get_tree().create_tween()
-	fading_tween.tween_property(fading, "color", Color(0.875, 0.973, 1, 0), 2).set_ease(Tween.EASE_IN)
+	# fading.show()
+	# fading.color = Color(0.875, 0.973, 1, 1)
+	# fading_tween = get_tree().create_tween()
+	# fading_tween.tween_property(fading, "color:a", 0, 2)
 
-	enter_timer.start(2)
-
-	# get_tree().change_scene_to_file("res://tutorial_level/tutorial_level.tscn")
 
 func _on_play_pressed():
 	canvas_layer.show()
@@ -37,18 +30,12 @@ func _on_quit_pressed():
 
 
 func _on_controls_screen_exit_control_screen():
-	fading_tween = get_tree().create_tween()
-	fading_tween.tween_property(fading, "color", Color(0.875, 0.973, 1, 1), 1)
+	# fading_tween = get_tree().create_tween()
+	# fading_tween.tween_property(fading, "color:a", 1, 1)
 
-	fading_timer.start(1.0);
+	fading_timer.start(0.0);
 
 
 func _on_fading_timer_timeout():
 	SceneSwitcher.goto_scene("res://Levels/tutorial_level/tutorial_level.tscn")
-
-
-
-
-func _on_enter_timeout():
-	canvas_layer.hide()
 
