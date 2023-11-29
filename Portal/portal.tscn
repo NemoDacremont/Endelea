@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://dh4grgmdhuix1"]
+
+[ext_resource type="Shader" path="res://Portal/portal.gdshader" id="1_v77mt"]
+
+[sub_resource type="Gradient" id="Gradient_66snu"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y58dv"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v0b73"]
+resource_local_to_scene = true
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_66snu")
+noise = SubResource("FastNoiseLite_y58dv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hktnj"]
+resource_local_to_scene = true
+shader = ExtResource("1_v77mt")
+shader_parameter/amplitude = 1.94
+shader_parameter/frequency = 8.68
+shader_parameter/rippleRate = 6.8
+shader_parameter/waveAmplitude = 0.1
+shader_parameter/waveFrequency = 7.0
+shader_parameter/blendingAmount = 5.6
+shader_parameter/noise = SubResource("NoiseTexture2D_v0b73")
+
+[sub_resource type="Gradient" id="Gradient_7thy4"]
+interpolation_mode = 1
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lcboo"]
+gradient = SubResource("Gradient_7thy4")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nl5mi"]
+radius = 140.004
+
+[node name="Portal" type="Area2D"]
+
+[node name="Portal" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_hktnj")
+texture = SubResource("GradientTexture2D_lcboo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_nl5mi")

@@ -1,5 +1,6 @@
 shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
+uniform float speed: hint_range(0, 1) = 0;
 
 // Xor's gausian blur function 
 // Link: https://xorshaders.weebly.com/tutorials/blur-shaders-5-part-2

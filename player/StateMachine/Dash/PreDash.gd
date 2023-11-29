@@ -34,7 +34,6 @@ func capture_inputs():
 
 
 func animation_process():
-	print(PlayerConstants.PRE_DASH_ANIMATION_NAME)
 	animationNode.play(PlayerConstants.PRE_DASH_ANIMATION_NAME)
 	animationNode.frame = PlayerConstants.PRE_DASH_ANIMATION_FRAME
 
@@ -99,7 +98,6 @@ func physics_process(delta: float, player: CharacterBody2D):
 func set_shader_value(value: float):
 	# in my case i'm tweening a shader on a texture rect, but you can use anything with a material on it
 	animationNode.material.set_shader_parameter("flashState", value);
-	print(value)
 
 func start():
 	dash_tween = get_tree().create_tween()

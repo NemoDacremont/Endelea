@@ -71,11 +71,13 @@ layout_mode = 2
 
 [node name="RightArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoRight/GoRight"]
 layout_mode = 2
-text = "󰜵 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰜵"
 
 [node name="D" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoRight/GoRight"]
 layout_mode = 2
-text = "󰬋 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬋"
 
 [node name="RightArrowAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoRight"]
 layout_mode = 2
@@ -90,11 +92,13 @@ layout_mode = 2
 
 [node name="LeftArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoLeft/GoLeftKeys"]
 layout_mode = 2
-text = "󰜲 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰜲"
 
 [node name="Q" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoLeft/GoLeftKeys"]
 layout_mode = 2
-text = "󰬘 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬘"
 
 [node name="Action" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/GoLeft"]
 layout_mode = 2
@@ -109,11 +113,13 @@ layout_mode = 2
 
 [node name="Space" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Jump/Keys2"]
 layout_mode = 2
-text = "󱁐 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󱁐"
 
 [node name="O" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Jump/Keys2"]
 layout_mode = 2
-text = "󰬖 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬖"
 
 [node name="JumpAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Jump"]
 layout_mode = 2
@@ -128,15 +134,32 @@ layout_mode = 2
 
 [node name="Shift" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash/DashKeys"]
 layout_mode = 2
-text = "󰘶 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰘶"
 
 [node name="K" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash/DashKeys"]
 layout_mode = 2
-text = "󰬒 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬒"
 
 [node name="DashAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash"]
 layout_mode = 2
 text = "Dash"
+
+[node name="Dash2" type="HBoxContainer" parent="MarginContainer/Rows/ControlsColumns/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="DashKeys" type="HBoxContainer" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash2"]
+layout_mode = 2
+
+[node name="Shift" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash2/DashKeys"]
+layout_mode = 2
+text = "Escape"
+
+[node name="DashAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/LeftColumn/Dash2"]
+layout_mode = 2
+text = "Pause"
 
 [node name="RightColumn" type="VBoxContainer" parent="MarginContainer/Rows/ControlsColumns"]
 layout_mode = 2
@@ -150,11 +173,13 @@ layout_mode = 2
 
 [node name="UpArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookUp/LookUpKeys"]
 layout_mode = 2
-text = "󰜸 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰜸"
 
 [node name="Z" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookUp/LookUpKeys"]
 layout_mode = 2
-text = "󰬡 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬡"
 
 [node name="LookUpAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookUp"]
 layout_mode = 2
@@ -169,11 +194,13 @@ layout_mode = 2
 
 [node name="DownArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookDown/LookDownKeys"]
 layout_mode = 2
-text = "󰛀 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰛀"
 
 [node name="S" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookDown/LookDownKeys"]
 layout_mode = 2
-text = "󰬚 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬚"
 
 [node name="LookDownAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookDown"]
 layout_mode = 2
@@ -188,11 +215,13 @@ layout_mode = 2
 
 [node name="LeftArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookLeft/LookLeftKeys"]
 layout_mode = 2
-text = "󰜲 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰜲"
 
 [node name="Q" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookLeft/LookLeftKeys"]
 layout_mode = 2
-text = "󰬘 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬘"
 
 [node name="LookLeftAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookLeft"]
 layout_mode = 2
@@ -207,11 +236,13 @@ layout_mode = 2
 
 [node name="RightArrow" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookRight/LookRightKeys"]
 layout_mode = 2
-text = "󰜵 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰜵"
 
 [node name="D" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookRight/LookRightKeys"]
 layout_mode = 2
-text = "󰬋 "
+theme_override_fonts/font = ExtResource("2_we44o")
+text = "󰬋"
 
 [node name="LookRightAction" type="Label" parent="MarginContainer/Rows/ControlsColumns/RightColumn/LookRight"]
 layout_mode = 2
@@ -219,7 +250,7 @@ text = "Right direction (dash)"
 
 [node name="PressKey" type="Label" parent="MarginContainer/Rows"]
 layout_mode = 2
-text = "Press any key to start"
+text = "Press Return to start"
 horizontal_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
@@ -232,6 +263,7 @@ one_shot = true
 one_shot = true
 
 [node name="Fading" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
