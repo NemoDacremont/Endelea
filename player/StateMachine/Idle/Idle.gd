@@ -7,7 +7,7 @@ extends Node
 @onready var state_machine: Node = get_parent()
 
 @onready var player_node: CharacterBody2D = find_parent("Player")
-@onready var animation_node: AnimatedSprite2D = get_node("../../Sprite")
+@onready var animation_node: AnimatedSprite2D = player_node.get_node("Sprite")
 
 @onready var run_left_particles: GPUParticles2D = $RunLeftParticles
 @onready var run_right_particles: GPUParticles2D = $RunRightParticles

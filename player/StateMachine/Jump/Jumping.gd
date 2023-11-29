@@ -4,9 +4,9 @@ const JUMP_PARTICLE_EMITTING_DURATION: float = .1
 
 @onready var jump: Node = get_parent()
 @onready var player_node: CharacterBody2D = jump.get_parent().get_parent()
+@onready var animationNode: AnimatedSprite2D = player_node.get_node("Sprite")
 
 static var jumping_tween: Tween
-@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
 
 @onready var jump_particles: GPUParticles2D = $JumpParticles
 @onready var jump_particles_timer: Timer = $JumpParticlesTimer

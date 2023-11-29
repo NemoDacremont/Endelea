@@ -24,7 +24,8 @@ static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var tmp_velocity: Vector2 = Vector2.ZERO
 
 
-@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
+@onready var player_node: CharacterBody2D = find_parent("Player")
+@onready var animationNode: AnimatedSprite2D = player_node.get_node("Sprite")
 static var pre_jump_tween: Tween
 
 

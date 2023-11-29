@@ -19,7 +19,8 @@ static var air_friction_force: Vector2 = Vector2.ZERO
 static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
-@onready var animationNode: AnimatedSprite2D = get_tree().get_current_scene().find_child("Sprite")
+@onready var player_node: CharacterBody2D = find_parent("Player")
+@onready var animationNode: AnimatedSprite2D = player_node.get_node("Sprite")
 static var dash_tween: Tween
 
 func capture_inputs():

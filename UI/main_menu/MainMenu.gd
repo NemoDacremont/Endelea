@@ -44,7 +44,7 @@ func _on_controls_screen_exit_control_screen():
 
 
 func _on_fading_timer_timeout():
-	get_tree().change_scene_to_file("res://tutorial_level/tutorial_level.tscn")
+	SceneSwitcher.goto_scene("res://Levels/tutorial_level/tutorial_level.tscn")
 
 
 
