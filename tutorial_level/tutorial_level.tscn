@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dh4grgmdhuix1" path="res://Portal/portal.tscn" id="5_jpfvr"]
 [ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://pause_screen/pause_screen.tscn" id="5_qkyfm"]
 [ext_resource type="PackedScene" uid="uid://7ipluu0nqigr" path="res://coin/coin.tscn" id="6_7xokk"]
-[ext_resource type="AudioStream" uid="uid://bks33venamv20" path="res://assets/Ambient Music.wav" id="6_klkxq"]
+[ext_resource type="AudioStream" uid="uid://bks33venamv20" path="res://assets/Tutorial_music.wav" id="6_klkxq"]
 [ext_resource type="AudioStream" uid="uid://bj5e6os60grvl" path="res://assets/Clement Panchout _ I want to believe _ 2004.wav" id="7_jgus0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6nog8"]
