@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfsc3qvxf5inh"]
+
+[ext_resource type="Script" path="res://UI/pause_screen/pause_screen.gd" id="1_6xypn"]
+[ext_resource type="Shader" path="res://UI/pause_screen/pause_screen.gdshader" id="1_d5ntk"]
+[ext_resource type="Theme" uid="uid://tuvxeegbtmjf" path="res://UI/main_menu/main_menu.tres" id="3_7cieq"]
+[ext_resource type="PackedScene" uid="uid://cjwd7ou4lhti3" path="res://UI/controls_screen/controls_screen.tscn" id="4_xpuf8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5q5so"]
+shader = ExtResource("1_d5ntk")
+shader_parameter/speed = 0.7
+shader_parameter/blur_type = 1
+shader_parameter/blur_amount = 8
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
+
+[node name="Pause_Screen" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6xypn")
+
+[node name="Blured_Background" type="ColorRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_5q5so")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -342.0
+offset_right = 226.0
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme = ExtResource("3_7cieq")
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Paused"
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Unpause" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Return to dream"
+
+[node name="Controls" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Show Controls"
+
+[node name="Main menu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Main menu"
+
+[node name="ControlsScreen" parent="." instance=ExtResource("4_xpuf8")]
+visible = false
+layout_mode = 1
+
+[node name="NoReturn" type="Timer" parent="."]
+
+[node name="MinTime" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Main menu" to="." method="_on_main_menu_pressed"]
+[connection signal="exit_control_screen" from="ControlsScreen" to="." method="_on_controls_screen_exit_control_screen"]
+[connection signal="timeout" from="NoReturn" to="." method="_on_no_return_timeout"]
+[connection signal="timeout" from="MinTime" to="." method="_on_min_time_timeout"]

@@ -1,0 +1,48 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://tuvxeegbtmjf"]
+
+[ext_resource type="FontFile" uid="uid://dgwapumtu5b3g" path="res://assets/fonts/Arapey-Regular.ttf" id="1_j6aj1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjqjs"]
+bg_color = Color(0.317647, 0.333333, 0.486275, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5m1xq"]
+bg_color = Color(0.447059, 0.521569, 0.627451, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0csm"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.960784, 0.941176, 0.921569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3gya"]
+bg_color = Color(0.317647, 0.333333, 0.486275, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[resource]
+Button/colors/font_color = Color(0, 0.0823529, 0.176471, 1)
+Button/colors/font_focus_color = Color(0.960784, 0.941176, 0.921569, 1)
+Button/colors/font_hover_color = Color(0.960784, 0.941176, 0.921569, 1)
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_j6aj1")
+Button/styles/focus = SubResource("StyleBoxFlat_bjqjs")
+Button/styles/hover = SubResource("StyleBoxFlat_5m1xq")
+Button/styles/normal = SubResource("StyleBoxFlat_i0csm")
+Button/styles/pressed = SubResource("StyleBoxFlat_b3gya")
+Label/fonts/font = ExtResource("1_j6aj1")
