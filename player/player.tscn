@@ -424,6 +424,7 @@ script = ExtResource("19_y3vjd")
 script = ExtResource("13_blxh5")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+process_mode = 3
 material = SubResource("ShaderMaterial_8pxm4")
 sprite_frames = SubResource("SpriteFrames_k4dxl")
 animation = &"Run"

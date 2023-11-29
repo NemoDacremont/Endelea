@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://dplk7o3h2852t"]
+[gd_scene load_steps=12 format=3 uid="uid://dplk7o3h2852t"]
 
 [ext_resource type="Script" path="res://Levels/tutorial_level/tutorial_level.gd" id="1_pyyxn"]
 [ext_resource type="PackedScene" uid="uid://cpexrccyxv8mv" path="res://Levels/tutorial_level/map/tutorial_level_map.tscn" id="2_s47r2"]
 [ext_resource type="PackedScene" uid="uid://b57sr0tds5iub" path="res://player/player.tscn" id="3_kluvr"]
 [ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="4_a1qvb"]
 [ext_resource type="PackedScene" uid="uid://dh4grgmdhuix1" path="res://Portal/portal.tscn" id="5_jpfvr"]
-[ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://pause_screen/pause_screen.tscn" id="5_qkyfm"]
+[ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://UI/pause_screen/pause_screen.tscn" id="5_qkyfm"]
 [ext_resource type="PackedScene" uid="uid://7ipluu0nqigr" path="res://coin/coin.tscn" id="6_7xokk"]
 [ext_resource type="AudioStream" uid="uid://bks33venamv20" path="res://assets/Tutorial_music.wav" id="6_klkxq"]
 [ext_resource type="AudioStream" uid="uid://bj5e6os60grvl" path="res://assets/Near_portal.wav" id="7_jgus0"]
+[ext_resource type="PackedScene" uid="uid://oxcvkqfc8tk6" path="res://UI/fading/fading.tscn" id="10_qg1f8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6nog8"]
 size = Vector2(11419, 912)
@@ -71,9 +72,6 @@ one_shot = true
 [node name="Portal" parent="Level" instance=ExtResource("5_jpfvr")]
 position = Vector2(3148, -456)
 
-[node name="level1Timer" type="Timer" parent="Level"]
-one_shot = true
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
 stream = ExtResource("6_klkxq")
 volume_db = -18.0
@@ -90,28 +88,13 @@ attenuation = 0.31864
 
 [node name="Fog" parent="UI" instance=ExtResource("4_a1qvb")]
 
-[node name="Control" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Fading" type="ColorRect" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.878431, 0.968627, 1, 1)
-
 [node name="Pause_Screen" parent="UI" instance=ExtResource("5_qkyfm")]
+visible = false
+
+[node name="RespawnFading" parent="." instance=ExtResource("10_qg1f8")]
 visible = false
 
 [connection signal="pause" from="Level/Player" to="." method="_on_player_pause"]
 [connection signal="body_shape_entered" from="Level/Area2D" to="." method="_on_area_2d_body_shape_entered"]
 [connection signal="timeout" from="Level/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
 [connection signal="body_shape_entered" from="Level/Portal" to="." method="_on_portal_body_shape_entered"]
-[connection signal="timeout" from="Level/level1Timer" to="." method="_on_level_1_timer_timeout"]

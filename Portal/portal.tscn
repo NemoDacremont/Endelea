@@ -18,12 +18,14 @@ noise = SubResource("FastNoiseLite_y58dv")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hktnj"]
 resource_local_to_scene = true
 shader = ExtResource("1_v77mt")
-shader_parameter/amplitude = 1.94
-shader_parameter/frequency = 8.68
-shader_parameter/rippleRate = 6.8
-shader_parameter/waveAmplitude = 0.1
-shader_parameter/waveFrequency = 7.0
-shader_parameter/blendingAmount = 5.6
+shader_parameter/amplitude = 2.0
+shader_parameter/frequency = 4.59
+shader_parameter/rippleRate = 2.3
+shader_parameter/waveAmplitude = 26.1
+shader_parameter/waveFrequency = 4.0
+shader_parameter/blendingAmount = 0.6
+shader_parameter/pixel_amount = 512
+shader_parameter/rotation_freq = 3.3
 shader_parameter/noise = SubResource("NoiseTexture2D_v0b73")
 
 [sub_resource type="Gradient" id="Gradient_7thy4"]
@@ -44,6 +46,7 @@ radius = 140.004
 [node name="Portal" type="Area2D"]
 
 [node name="Portal" type="Sprite2D" parent="."]
+process_mode = 3
 material = SubResource("ShaderMaterial_hktnj")
 texture = SubResource("GradientTexture2D_lcboo")
 

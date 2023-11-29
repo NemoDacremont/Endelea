@@ -1,20 +1,41 @@
 extends CanvasLayer
 
-@onready var fading_node: ColorRect = $Control/FadingRect
-const FADING_DURATION: float = 1.0  # in s
+signal fading_ended
 
-func _ready():
-	print("REAYD!", fading_node)
+@onready var fading_node: ColorRect = $Fading/FadingRect
+@onready var tween: Tween = get_tree().create_tween();
 
-func fades_in(color: Color = Global.DREAM_FADING_IN_COLOR, duration: float = FADING_DURATION) -> void:
+func _ready() -> void:
+	layer = 9999
+
+
+func fades_in(color: Color = Global.DREAM_FADING_IN_COLOR, duration: float = Global.FADING_DURATION) -> void:
+	print("FADES IN")
 	fading_node.color = color;
 
-	var tween = get_tree().create_tween();
+	tween = get_tree().create_tween();
 	tween.tween_property(fading_node, "color:a", 0, duration);
 
 
-func fades_out(color: Color = Global.DREAM_FADING_OUT_COLOR, duration: float = FADING_DURATION) -> void:
+func force_color(color: Color) -> void:
+	fading_node.color = color;
+	print("NEW COLOR: ", color, ", ", fading_node.color)
+
+
+func get_color() -> Color:
+	return fading_node.color
+
+
+func fades_out(color: Color = Global.DREAM_FADING_OUT_COLOR, duration: float = Global.FADING_DURATION) -> void:
+	print("FADES OUT")
 	fading_node.color = color;
 
-	var tween = get_tree().create_tween();
+	tween = get_tree().create_tween();
 	tween.tween_property(fading_node, "color:a", 1, duration);
+
+
+func get_tween() -> Tween:
+	return tween;
+
+
+

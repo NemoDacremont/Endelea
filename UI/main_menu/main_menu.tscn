@@ -88,20 +88,7 @@ text = "Quit"
 [node name="ControlsScreen" parent="CanvasLayer" instance=ExtResource("5_q8v6b")]
 visible = false
 
-[node name="Fading" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-
-[node name="FadingTimer" type="Timer" parent="CanvasLayer"]
-one_shot = true
-
 [connection signal="pressed" from="VBoxContainer/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="exit_control_screen" from="CanvasLayer/ControlsScreen" to="." method="_on_controls_screen_exit_control_screen"]
-[connection signal="timeout" from="CanvasLayer/FadingTimer" to="." method="_on_fading_timer_timeout"]
