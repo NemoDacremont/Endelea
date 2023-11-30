@@ -2,7 +2,6 @@ extends Control
 
 @onready var control_screen: Control = $CanvasLayer/ControlsScreen
 @onready var canvas_layer : CanvasLayer = $CanvasLayer
-@onready var fading: ColorRect = $CanvasLayer/Fading
 
 
 func _ready():

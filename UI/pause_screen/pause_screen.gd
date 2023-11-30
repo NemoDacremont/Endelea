@@ -41,7 +41,7 @@ func _on_unpause_pressed():
 
 
 func _on_main_menu_pressed():
-	get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
+	SceneSwitcher.goto_scene("res://UI/main_menu/main_menu.tscn")
 
 
 func _on_controls_screen_exit_control_screen():

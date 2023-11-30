@@ -250,31 +250,12 @@ text = "Right direction (dash)"
 
 [node name="PressKey" type="Label" parent="MarginContainer/Rows"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.898039, 1)
 text = "Press Return to start"
 horizontal_alignment = 1
-visible_characters = 0
-visible_ratio = 0.0
 
 [node name="MinTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
-[node name="BeforeTextRatio" type="Timer" parent="."]
-one_shot = true
-
-[node name="Fading" type="ColorRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.87451, 0.972549, 1, 0)
-
-[node name="FadingTimer" type="Timer" parent="."]
-one_shot = true
-
 [connection signal="timeout" from="MinTimer" to="." method="_on_min_timer_timeout"]
-[connection signal="timeout" from="BeforeTextRatio" to="." method="_on_before_text_ratio_timeout"]
-[connection signal="timeout" from="FadingTimer" to="." method="_on_fading_timer_timeout"]

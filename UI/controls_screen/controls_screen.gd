@@ -6,33 +6,34 @@ const MIN_TIMER_DURATION: float = 1  # .5s before enabling quitting
 const BEFORE_TEXT_RATIO_DURATION: float = .5  # .5s before enabling quitting
 const FADING_DURATION: float = 1  # .5s before enabling quitting
 
+const PRESS_KEY_COLOR: Color = Color(0.875, 0.973, 1, 0.0);
+
 
 @onready var min_timer: Timer = $MinTimer
-@onready var before_text_ratio: Timer = $BeforeTextRatio
-var tween_ratio: Tween
 var press_key: Label
+var tween_press_key_alpha: Tween
 var fading_timer: Timer
 
-var fading: ColorRect
-
-var tween_fading: Tween
+var press_key_settings: LabelSettings
 
 var can_key_press: bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func start():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-	press_key = find_child("PressKey")
-	fading = find_child("Fading")
-	fading_timer = find_child("FadingTimer")
-
+	press_key = $MarginContainer/Rows/PressKey
 
 	# Hide press_key, reveal it on min_timer end
-	press_key.set_visible_ratio(0.0)
+	print(press_key)
+	print(press_key.label_settings)
+	# press_key.label_settings.font_color = PRESS_KEY_COLOR
+	press_key.set("theme_override_colors/font_color", PRESS_KEY_COLOR);
 	can_key_press = false
 
 	min_timer.start(MIN_TIMER_DURATION);
+
 
 
 func _process(_delta):
@@ -40,21 +41,16 @@ func _process(_delta):
 		emit_signal("exit_control_screen")
 
 
+func change_key_press_alpha(alpha: float) -> void:
+	var c = PRESS_KEY_COLOR
+	c.a = alpha
+	press_key.set("theme_override_colors/font_color", c);
+
 
 func _on_min_timer_timeout():
-	tween_ratio = get_tree().create_tween()
-	press_key = find_child("PressKey")
-
+	tween_press_key_alpha= get_tree().create_tween()
 
 	# Hide press_key, reveal it on min_timer end
-	tween_ratio.tween_property(press_key, "visible_ratio", 1.0, .5)
-	before_text_ratio.start(BEFORE_TEXT_RATIO_DURATION)
-
-
-
-func _on_before_text_ratio_timeout():
+	tween_press_key_alpha.tween_method(change_key_press_alpha, 0.0, 1.0, .5)
 	can_key_press = true
 
-
-func _on_fading_timer_timeout():
-	pass
