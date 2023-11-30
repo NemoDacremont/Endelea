@@ -18,14 +18,18 @@ noise = SubResource("FastNoiseLite_y58dv")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hktnj"]
 resource_local_to_scene = true
 shader = ExtResource("1_v77mt")
-shader_parameter/amplitude = 2.0
-shader_parameter/frequency = 4.59
-shader_parameter/rippleRate = 2.3
-shader_parameter/waveAmplitude = 26.1
+shader_parameter/amplitude = 2.05
+shader_parameter/frequency = 5.47
+shader_parameter/rippleRate = 7.3
+shader_parameter/waveAmplitude = 0.1
 shader_parameter/waveFrequency = 4.0
 shader_parameter/blendingAmount = 0.6
-shader_parameter/pixel_amount = 512
-shader_parameter/rotation_freq = 3.3
+shader_parameter/pixel_amount = 32
+shader_parameter/rotation_freq = 0.3
+shader_parameter/ratio = 0.037
+shader_parameter/power = 0.001
+shader_parameter/min_speed = 78.0
+shader_parameter/max_speed = 90.0
 shader_parameter/noise = SubResource("NoiseTexture2D_v0b73")
 
 [sub_resource type="Gradient" id="Gradient_7thy4"]
@@ -51,4 +55,5 @@ material = SubResource("ShaderMaterial_hktnj")
 texture = SubResource("GradientTexture2D_lcboo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_nl5mi")
