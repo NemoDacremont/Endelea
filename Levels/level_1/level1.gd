@@ -69,6 +69,6 @@ func _on_portal_2_body_shape_entered(_a, _b, _c, _d):
 
 
 func _on_end_timer_timeout():
-	get_tree().change_scene_to_file("res://end/end_screen.tscn")
+	SceneSwitcher.goto_scene("res://UI/end_screen/end_screen.tscn")
 	
 
