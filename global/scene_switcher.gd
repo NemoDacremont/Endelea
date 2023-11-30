@@ -50,6 +50,7 @@ func goto_scene(path: String):
 		print("goto ", path)
 		fading_node.fades_out();
 		has_fading_ended = false
+
 		call_deferred("_deferred_goto_scene", path)
 
 	else:
@@ -71,6 +72,7 @@ func _deferred_goto_scene(path: String):
 	if (s == null or fading_tween == null):
 		print("s=", s, " fading_tween=", fading_tween)
 		goto_scene(Global.MAIN_SCENE)
+		is_switching = false
 
 	else:
 		await fading_tween.finished
