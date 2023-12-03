@@ -92,12 +92,14 @@ const WALL_JUMP_BLOCKING_DURATION: float = .1  # s
 # Idle
 ## Run
 
-const MAX_SPEED_X: float = 3 * WIDTH 
+const MAX_SPEED_X: float = 4 * WIDTH 
 const TIME_BEFORE_FULL_SPEED: float = 0.1
-const AIR_FRICTION_X: float = 3 / TIME_BEFORE_FULL_SPEED
+const AIR_FRICTION_X_DEFAULT: float = 3 / TIME_BEFORE_FULL_SPEED
+var AIR_FRICTION_X: float = AIR_FRICTION_X_DEFAULT
+
 
 # Force applied to the player when moving on x axis
-const ACCEL_X: float = MAX_SPEED_X * AIR_FRICTION_X
+var ACCEL_X: float = MAX_SPEED_X * AIR_FRICTION_X
 
 
 

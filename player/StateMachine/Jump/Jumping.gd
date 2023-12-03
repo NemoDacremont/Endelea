@@ -14,7 +14,10 @@ static var jumping_tween: Tween
 
 
 func start():  # Just create impulsion
+	
+	player_node.velocity.x += sign(player_node.velocity.x) * PlayerConstants.JUMP_VELOCITY / 2
 	player_node.velocity.y = PlayerConstants.JUMP_VELOCITY
+
 	jumping_tween = get_tree().create_tween()
 	jumping_tween.tween_property(animationNode, "scale", Vector2(.75, 1), PlayerConstants.PRE_JUMP_DURATION / 3)
 	jumping_tween.tween_property(animationNode, "scale", Vector2(1, 1), PlayerConstants.PRE_JUMP_DURATION / 6)

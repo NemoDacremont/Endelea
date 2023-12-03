@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=74 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="2_eo2si"]
@@ -36,46 +36,40 @@ point_count = 2
 curve = SubResource("Curve_lm82r")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xgcw7"]
+particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(20, 0, 0)
-particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
 spread = 39.79
-gravity = Vector3(0, 98, 0)
 initial_velocity_min = 40.0
 initial_velocity_max = 60.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 98, 0)
 scale_max = 1.4
 scale_curve = SubResource("CurveTexture_8bpis")
 color_ramp = ExtResource("11_vf784")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_apry0"]
 resource_local_to_scene = true
+particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(20, 0, 1)
-particle_flag_disable_z = true
 direction = Vector3(1, -1, 0)
 spread = 17.05
-gravity = Vector3(0, 100, 0)
 initial_velocity_min = 52.62
 initial_velocity_max = 52.62
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 100, 0)
 scale_max = 3.0
 color_ramp = ExtResource("11_vf784")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mpvaq"]
+particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(20, 0, 1)
-particle_flag_disable_z = true
 direction = Vector3(-1, -1, 0)
 spread = 17.05
-gravity = Vector3(0, 100, 0)
 initial_velocity_min = 52.62
 initial_velocity_max = 52.62
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 100, 0)
 scale_max = 3.0
 color_ramp = ExtResource("11_vf784")
 
@@ -95,12 +89,10 @@ curve = SubResource("Curve_4nyti")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lopao"]
 lifetime_randomness = 0.1
+particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(10, 0, 1)
-particle_flag_disable_z = true
 gravity = Vector3(-100, 5, 0)
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
 scale_curve = SubResource("CurveTexture_00e84")
 color_ramp = SubResource("GradientTexture1D_ck4ho")
 
@@ -108,6 +100,223 @@ color_ramp = SubResource("GradientTexture1D_ck4ho")
 custom_solver_bias = 1.0
 radius = 11.0
 height = 56.0
+
+[sub_resource type="Animation" id="Animation_o1rpx"]
+resource_name = "Fall"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Jump"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_i3qw8"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+
+[sub_resource type="Animation" id="Animation_4tpb0"]
+resource_name = "Jump_Rise"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Jump"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2olj4"]
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Run"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StateMachine/Idle/RunLeftParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_0c7iu"]
+resource_name = "Run"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Run"]
+}
+
+[sub_resource type="Animation" id="Animation_d8cnw"]
+resource_name = "air_low_speed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Jump"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_tq8hm"]
+resource_name = "pre_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Pre_Dash"]
+}
+
+[sub_resource type="Animation" id="Animation_rai1s"]
+resource_name = "pre_jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"Land"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StateMachine/Jump/Jumping/JumpParticles:emitting")
+tracks/2/interp = 0
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_asdlk"]
+_data = {
+"Fall": SubResource("Animation_o1rpx"),
+"Idle": SubResource("Animation_i3qw8"),
+"Rise": SubResource("Animation_4tpb0"),
+"Run_Left": SubResource("Animation_2olj4"),
+"Run_Right": SubResource("Animation_0c7iu"),
+"air_low_speed": SubResource("Animation_d8cnw"),
+"pre_dash": SubResource("Animation_tq8hm"),
+"pre_jump": SubResource("Animation_rai1s")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8pxm4"]
 shader = ExtResource("2_eo2si")
@@ -274,7 +483,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5fv6j")
 }],
-"loop": true,
+"loop": false,
 "name": &"Pre_Dash",
 "speed": 0.0
 }, {
@@ -336,7 +545,6 @@ script = ExtResource("12_esqat")
 
 [node name="JumpParticles" type="GPUParticles2D" parent="StateMachine/Jump/Jumping"]
 position = Vector2(0, 28)
-emitting = false
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_xgcw7")
 texture = ExtResource("12_7tq0s")
@@ -423,12 +631,18 @@ script = ExtResource("19_y3vjd")
 [node name="PlayerConstants" type="Node" parent="."]
 script = ExtResource("13_blxh5")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_asdlk")
+}
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 process_mode = 3
 material = SubResource("ShaderMaterial_8pxm4")
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Run"
+animation = &"Idle"
 autoplay = "Idle"
+flip_h = true
 
 [connection signal="timeout" from="StateMachine/Jump/Jumping/JumpParticlesTimer" to="StateMachine/Jump/Jumping" method="_on_jump_particles_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Jump/CoyoteJump/CoyoteJumpTimer" to="StateMachine/Jump/CoyoteJump" method="_on_coyote_jump_timer_timeout"]

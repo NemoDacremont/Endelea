@@ -115,14 +115,13 @@ func animation_process() -> void:
 		animation_node.frame = frame
 
 	
-
-
-
-
 func physics_process(delta: float, player: CharacterBody2D) -> void:
 	player.acceleration = Vector2.ZERO
 	wall_interaction_fall_speed_multiplier = 1.0
 	capture_inputs()
+
+	if (player.is_on_floor()):
+		PlayerConstants.AIR_FRICTION_X += (PlayerConstants.AIR_FRICTION_X_DEFAULT - PlayerConstants.AIR_FRICTION_X)
 
 	# Update run force direction
 	movement_direction = 0
@@ -134,12 +133,13 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 
 	# Update forces
 	run_force = movement_direction * PlayerConstants.ACCEL_X * Vector2.RIGHT
-	air_friction_force.x = - PlayerConstants.AIR_FRICTION_X * player.velocity.x
 
+	air_friction_force.x = - PlayerConstants.AIR_FRICTION_X * player.velocity.x
 	# gravity is higher if falling
 	gravity_force = default_gravity_force
 	if (player.velocity.y > 0):
 		gravity_force = PlayerConstants.FALLING_GRAVITY_MULTIPLIER * default_gravity_force
+
 
 
 	if (not was_on_wall && player.is_on_wall()):

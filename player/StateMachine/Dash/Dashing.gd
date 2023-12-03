@@ -11,6 +11,9 @@ static var dashing_time: float = 0
 
 @onready var particles: GPUParticles2D = $DashParticles
 
+var multiplier: float = 1
+static var was_on_floor = false
+
 
 func animation_process():
 	if (player_node.is_on_floor()):
@@ -23,10 +26,18 @@ func animation_process():
 func physics_process(delta: float, player: CharacterBody2D):
 	player.acceleration = Vector2.ZERO
 
-	dash_direction = dash.dash_direction
 	dashing_time += delta
+	var k: float = 1.5
+	if (!was_on_floor && player.is_on_floor_only()):
+		dash_direction.y = - dash_direction.y / (2 * k)
+		dash_direction.x = dash_direction.x * k
+		multiplier = k
+		dashing_time /= k
+		dash.force_reset_dash_counter()
+		was_on_floor = true
 
-	player.velocity = dash_direction * PlayerConstants.DASH_SPEED
+	player.velocity = dash_direction * PlayerConstants.DASH_SPEED * multiplier
+
 	player.move_and_slide()
 
 	particles.position = player.position
@@ -42,6 +53,14 @@ func physics_process(delta: float, player: CharacterBody2D):
 func start():
 	particles.position = player_node.position
 	particles.emitting = true
+	dash_direction = dash.dash_direction
+	multiplier = 1
+	PlayerConstants.AIR_FRICTION_X /= 1.5
+
+	was_on_floor = false
+	if (player_node.is_on_floor_only() && dash_direction.y == 0):
+		multiplier = 1.5
+		was_on_floor = true
 
 
 func process(_delta):
