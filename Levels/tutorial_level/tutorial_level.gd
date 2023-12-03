@@ -11,12 +11,15 @@ const FADING_DURATION: float = 1
 
 @onready var respawn_fading_node: CanvasLayer = $RespawnFading
 
+var portal: Resource;
 
 func start():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 	player.position = start_player_position.position
-	player.start()
+	player.start() 
+
+	portal = preload("res://Portal/portal.gdshader")
 
 
 # Called when the node enters the scene tree for the first time.

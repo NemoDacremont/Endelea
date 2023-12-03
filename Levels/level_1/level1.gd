@@ -12,8 +12,14 @@ const FADING_DURATION: float = 1
 
 @onready var end_timer: Timer = $Level/EndTimer
 
-
+var portal: Resource;
 var fading_tween: Tween
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	portal = preload("res://Portal/portal.gdshader")
+	start()
 
 func start():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -28,9 +34,6 @@ func start():
 	fading_tween.tween_property(fading, "color", Color(0.341, 0, 0.098, 0.0), FADING_DURATION)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	start()
 
 
 func _process(delta):
