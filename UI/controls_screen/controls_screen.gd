@@ -21,14 +21,12 @@ var can_key_press: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func start():
+	# Hides the mouse
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 	press_key = $MarginContainer/Rows/PressKey
 
-	# Hide press_key, reveal it on min_timer end
-	print(press_key)
-	print(press_key.label_settings)
-	# press_key.label_settings.font_color = PRESS_KEY_COLOR
+	# Forces the color of press_key, will be moved to animation_player
 	press_key.set("theme_override_colors/font_color", PRESS_KEY_COLOR);
 	can_key_press = false
 
