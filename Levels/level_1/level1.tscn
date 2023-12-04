@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="4_gl48a"]
 [ext_resource type="AudioStream" uid="uid://b8g13c0vi7i04" path="res://assets/Nightmare.wav" id="5_0lub6"]
 [ext_resource type="PackedScene" uid="uid://cfsc3qvxf5inh" path="res://UI/pause_screen/pause_screen.tscn" id="5_36vj2"]
-[ext_resource type="PackedScene" uid="uid://c0dcjrqoq46sw" path="res://Portal/portal2.tscn" id="8_n3g6b"]
+[ext_resource type="PackedScene" uid="uid://dh4grgmdhuix1" path="res://Portal/portal.tscn" id="6_h32pr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6nog8"]
 size = Vector2(11419, 912)
@@ -74,8 +74,8 @@ autoplay = true
 
 [node name="EndTimer" type="Timer" parent="Level"]
 
-[node name="Portal2" parent="Level" instance=ExtResource("8_n3g6b")]
-position = Vector2(-2914, -2327)
+[node name="Portal" parent="Level" instance=ExtResource("6_h32pr")]
+position = Vector2(-2915, -2397)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -102,8 +102,8 @@ color = Color(0.341176, 0, 0.0980392, 1)
 [node name="Pause_Screen" parent="UI" instance=ExtResource("5_36vj2")]
 visible = false
 
-[connection signal="pause" from="Level/Player" to="." method="_on_player_pause" flags=18]
-[connection signal="body_shape_entered" from="Level/Area2D" to="." method="_on_area_2d_body_shape_entered" flags=18]
-[connection signal="timeout" from="Level/RespawnTimer" to="." method="_on_respawn_timer_timeout" flags=18]
+[connection signal="pause" from="Level/Player" to="." method="_on_player_pause"]
+[connection signal="body_shape_entered" from="Level/Area2D" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="timeout" from="Level/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
 [connection signal="timeout" from="Level/EndTimer" to="." method="_on_end_timer_timeout"]
-[connection signal="body_shape_entered" from="Level/Portal2" to="." method="_on_portal_2_body_shape_entered"]
+[connection signal="body_entered" from="Level/Portal" to="." method="_on_portal_body_entered"]

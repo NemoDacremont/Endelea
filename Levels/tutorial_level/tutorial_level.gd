@@ -19,7 +19,8 @@ func start():
 	player.position = start_player_position.position
 	player.start() 
 
-	portal = preload("res://Portal/portal.gdshader")
+	portal = load("res://Portal/portal.gdshader")
+	portal = load("res://Portal/portal.tscn")
 
 
 # Called when the node enters the scene tree for the first time.

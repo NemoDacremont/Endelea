@@ -18,7 +18,7 @@ var fading_tween: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	portal = preload("res://Portal/portal.gdshader")
+	portal = load("res://Portal/portal2.tscn")
 	start()
 
 func start():
@@ -60,18 +60,8 @@ func _on_respawn_timer_timeout():
 	start()
 
 
-func _on_portal_2_body_shape_entered(_a, _b, _c, _d):
-	var fading = $UI/Control/Fading
-	fading_tween = get_tree().create_tween();
-	fading.color = Color(0.878, 0.969, 1, 0);
-	fading.visible = true  # set to false in editor so can work on the scene
-	fading_tween.tween_property(fading, "color", Color(0.878, 0.969, 1, 1.0), 1)
-
-	end_timer.start(1)
-
-
-
-func _on_end_timer_timeout():
+func _on_portal_body_entered(_body: Node2D) -> void:
 	SceneSwitcher.goto_scene("res://UI/end_screen/end_screen.tscn")
-	
+
+
 

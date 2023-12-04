@@ -71,6 +71,7 @@ one_shot = true
 
 [node name="Portal" parent="Level" instance=ExtResource("5_jpfvr")]
 position = Vector2(3148, -456)
+portal_color = Color(0.448173, 0.208151, 9.62615e-08, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
 stream = ExtResource("6_klkxq")

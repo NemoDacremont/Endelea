@@ -5,6 +5,8 @@ uniform float amplitude: hint_range(0, 5, 0.01) = 2.0;
 uniform float frequency: hint_range(0, 15, 0.01) = 12.69;
 uniform float rippleRate : hint_range(0.5, 150.0, 0.1) = 9.2;
 
+uniform vec4 portal_color: source_color = vec4(0.341, 0, 0.098, 1);
+
 
 // for wave
 uniform float waveAmplitude = 0.1;
@@ -80,7 +82,7 @@ void fragment() {
 	
 
 
-	vec4 color = vec4(0.341, 0, 0.098, 1.0 * ripple);
+	vec4 color = vec4(portal_color.r, portal_color.g, portal_color.b, 1.0 * ripple);
 	
 	float alphaScalar = (1.0 - min(dist, 1.0)) * ns.x * 2.5; 
 	
