@@ -545,6 +545,7 @@ script = ExtResource("12_esqat")
 
 [node name="JumpParticles" type="GPUParticles2D" parent="StateMachine/Jump/Jumping"]
 position = Vector2(0, 28)
+emitting = false
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_xgcw7")
 texture = ExtResource("12_7tq0s")

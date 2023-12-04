@@ -33,6 +33,7 @@ func physics_process(delta: float, player: CharacterBody2D):
 		dash_direction.x = dash_direction.x * k
 		multiplier = k
 		dashing_time /= k
+		PlayerConstants.AIR_FRICTION_X /= 1.5
 		dash.force_reset_dash_counter()
 		was_on_floor = true
 
@@ -55,7 +56,6 @@ func start():
 	particles.emitting = true
 	dash_direction = dash.dash_direction
 	multiplier = 1
-	PlayerConstants.AIR_FRICTION_X /= 1.5
 
 	was_on_floor = false
 	if (player_node.is_on_floor_only() && dash_direction.y == 0):
