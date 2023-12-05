@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://b38uq8nnproqe"]
+
+[ext_resource type="PackedScene" uid="uid://4hsrj6bxicge" path="res://player/Fog.tscn" id="1_wbcid"]
+
+[node name="MenuBackground" type="CanvasLayer"]
+layer = -128
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0823529, 0.176471, 1)
+
+[node name="Fog" parent="Control" instance=ExtResource("1_wbcid")]
+layout_mode = 1
