@@ -61,6 +61,7 @@ func _on_respawn_timer_timeout():
 
 
 func _on_portal_body_entered(_body: Node2D) -> void:
+	player.entered_portal()
 	SceneSwitcher.goto_scene("res://UI/end_screen/end_screen.tscn")
 
 

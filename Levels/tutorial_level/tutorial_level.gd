@@ -53,5 +53,6 @@ func _on_respawn_timer_timeout():
 
 
 func _on_portal_body_shape_entered(_body_rid:RID, _body:Node2D, _body_shape_index:int, _local_shape_index:int):
+	player.entered_portal()
 	SceneSwitcher.goto_scene("res://Levels/level_1/level1.tscn")
 

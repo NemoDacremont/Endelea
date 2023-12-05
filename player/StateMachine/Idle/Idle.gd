@@ -12,14 +12,14 @@ extends Node
 @onready var run_left_particles: GPUParticles2D = $RunLeftParticles
 @onready var run_right_particles: GPUParticles2D = $RunRightParticles
 
-# 
+# states
 static var was_on_wall: bool = false
-
 
 static var is_moving_right: bool = false
 static var is_moving_left: bool = false
 
 
+# Forces & physics
 static var movement_direction: int = 1
 static var run_force: Vector2 = PlayerConstants.ACCEL_X * Vector2.RIGHT
 static var air_friction_force: Vector2 = Vector2.ZERO
@@ -27,13 +27,14 @@ static var air_friction_force: Vector2 = Vector2.ZERO
 static var default_gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 static var gravity_force: Vector2 = PlayerConstants.GRAVITY * Vector2.DOWN
 
-
-static var animation: String = PlayerConstants.IDLE_ANIMATION_NAME
-static var frame: int = -1;
-
-
 static var wall_interaction_force: Vector2 = Vector2.UP
 static var wall_interaction_fall_speed_multiplier: float = 1.0
+
+static var old_vel: Vector2 = Vector2.ZERO
+
+# Animations
+static var animation: String = PlayerConstants.IDLE_ANIMATION_NAME
+static var frame: int = -1;
 
 
 
@@ -167,8 +168,17 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 
 	player.velocity.y = min(player.velocity.y, PlayerConstants.MAX_FALL_SPEED * wall_interaction_fall_speed_multiplier)
 
+
+	if (player.enter_portal):
+		old_vel = player.velocity
+		player.velocity /= 10
+
 	# godot doing godot thigns
 	player.move_and_slide()
+
+
+	if (player.enter_portal):
+		player.velocity = old_vel
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
