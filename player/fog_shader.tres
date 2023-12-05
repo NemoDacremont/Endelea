@@ -2,10 +2,10 @@
 
 [ext_resource type="Shader" path="res://player/forground.gdshader" id="1_0l65n"]
 
-[sub_resource type="Gradient" id="Gradient_odisb"]
+[sub_resource type="Gradient" id="Gradient_umetk"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ojhh5"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ucdc8"]
 noise_type = 3
 frequency = 0.0025
 
@@ -14,8 +14,8 @@ invert = true
 seamless = true
 seamless_blend_skirt = 1.0
 normalize = false
-color_ramp = SubResource("Gradient_odisb")
-noise = SubResource("FastNoiseLite_ojhh5")
+color_ramp = SubResource("Gradient_umetk")
+noise = SubResource("FastNoiseLite_ucdc8")
 
 [resource]
 resource_local_to_scene = true
