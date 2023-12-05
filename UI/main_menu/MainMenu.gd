@@ -16,6 +16,9 @@ func _on_play_pressed():
 	control_screen.show()
 	control_screen.start()
 
+func _on_settings_pressed():
+	SceneSwitcher.goto_scene("res://UI/settings/settings.tscn")
+
 
 func _on_quit_pressed():
 	get_tree().quit()
