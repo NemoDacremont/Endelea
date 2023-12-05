@@ -47,19 +47,20 @@ grow_vertical = 2
 
 [node name="tutorial_level_map" parent="Level" instance=ExtResource("2_s47r2")]
 position = Vector2(-119, 8)
+scale = Vector2(3, 3)
 
 [node name="Coin" parent="Level" instance=ExtResource("6_7xokk")]
-position = Vector2(1649, -290)
+position = Vector2(1972, 177)
 scale = Vector2(3, 3)
 
 [node name="FirstPlayerPosition" type="Marker2D" parent="Level"]
-position = Vector2(202, 409)
+position = Vector2(579, 786)
 
 [node name="Player" parent="Level" instance=ExtResource("3_kluvr")]
 position = Vector2(202, 408)
 
 [node name="Area2D" type="Area2D" parent="Level"]
-position = Vector2(-406, 778)
+position = Vector2(-567, 1373)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Area2D"]
@@ -70,7 +71,7 @@ shape = SubResource("RectangleShape2D_6nog8")
 one_shot = true
 
 [node name="Portal" parent="Level" instance=ExtResource("5_jpfvr")]
-position = Vector2(3148, -456)
+position = Vector2(3498, 65)
 portal_color = Color(0.341, 0, 0.098, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
@@ -79,7 +80,7 @@ volume_db = -18.0
 autoplay = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(3566, -929)
+position = Vector2(3862, -193)
 stream = ExtResource("7_jgus0")
 autoplay = true
 max_distance = 1200.0

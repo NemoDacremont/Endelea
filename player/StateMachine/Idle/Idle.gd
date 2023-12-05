@@ -121,8 +121,8 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 	wall_interaction_fall_speed_multiplier = 1.0
 	capture_inputs()
 
-	if (player.is_on_floor()):
-		PlayerConstants.AIR_FRICTION_X += (PlayerConstants.AIR_FRICTION_X_DEFAULT - PlayerConstants.AIR_FRICTION_X)
+	if (player.is_on_floor() or player.is_on_wall()):
+		PlayerConstants.AIR_FRICTION_X = PlayerConstants.AIR_FRICTION_X_DEFAULT
 
 	# Update run force direction
 	movement_direction = 0

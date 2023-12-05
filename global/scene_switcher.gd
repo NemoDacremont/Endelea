@@ -57,6 +57,9 @@ func _process(_delta):
 		ResourceLoader.THREAD_LOAD_FAILED, ResourceLoader.THREAD_LOAD_INVALID_RESOURCE: #? THREAD_LOAD_INVALID_RESOURCE, THREAD_LOAD_FAILED
 			print("RATIO, code mieux")
 
+		ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			print("load in progress")
+
 		ResourceLoader.THREAD_LOAD_LOADED:
 			new_scene = ResourceLoader.load_threaded_get(loading_scene_path)
 			change_scene(new_scene)
@@ -106,6 +109,7 @@ func goto_scene(path: String):
 
 		var b = _deferred_goto_scene.bind(path)
 
+		print("now loading")
 		await Signal(fading_node, "fading_ended")
 		ressource_loader_thread.start(b)
 

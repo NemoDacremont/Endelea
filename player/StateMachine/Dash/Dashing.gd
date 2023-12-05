@@ -33,7 +33,7 @@ func physics_process(delta: float, player: CharacterBody2D):
 		dash_direction.x = dash_direction.x * k
 		multiplier = k
 		dashing_time /= k
-		PlayerConstants.AIR_FRICTION_X /= 1.5
+		PlayerConstants.AIR_FRICTION_X = PlayerConstants.AIR_FRICTION_X_DEFAULT / 2
 		dash.force_reset_dash_counter()
 		was_on_floor = true
 
