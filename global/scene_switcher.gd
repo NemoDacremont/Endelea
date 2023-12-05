@@ -35,17 +35,9 @@ func _ready() -> void:
 	print("READY!!!!! AND FROM SWITCHER!")
 	print("current scene: ", current_scene)
 	fading_node.show()
-	set_process(false)
-
-	# ResourceLoader.load_threaded_request(Global.FADING_PATH)
-	# fading_scene = ResourceLoader.load_threaded_get(Global.FADING_PATH);
+	set_process(false)  # Stop process no loading at start
 
 	enter_new_scene()
-
-	# fading_node.fades_in()
-	# fading_node = current_scene.get_node("Fading")
-	# fading_node.show()
-	# fading_node.fades_in()
 
 func _exit_tree():
 	ressource_loader_thread.wait_to_finish()
@@ -53,12 +45,9 @@ func _exit_tree():
 
 func enter_new_scene() -> void:
 	print("ENTER NEW SCENE")
-	# fading_node = fading_scene.instantiate()
-	# current_scene.add_child(fading_node)
-	# fading_node = current_scene.get_node("Fading")
 
 	fading_node.call_deferred("fades_in")
-	print("a")
+	get_tree().paused = false  # Force resume
 
 
 func _process(_delta):
@@ -83,13 +72,11 @@ func change_scene(s: Resource):
 
 	# Add it to the active scene, as child of root.
 	scene_placeholder.call_deferred("add_child", current_scene)
-	# scene_placeholder.add_child(current_scene)
 
 	# Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
-
 	print("Current_scene = ", current_scene)
-	# fading_node.free()
 	former_scene.free()
+
 	enter_new_scene()
 	print("Current_scene.children = ", current_scene.get_children())
 	is_switching = false
@@ -121,7 +108,6 @@ func goto_scene(path: String):
 
 		await Signal(fading_node, "fading_ended")
 		ressource_loader_thread.start(b)
-		# call_deferred("_deferred_goto_scene", path)
 
 	else:
 		print("IS ALREADY SWITCHING SCENE!!!")
@@ -137,8 +123,4 @@ func _deferred_goto_scene(path: String):
 
 	new_scene = load(path)
 	call_deferred("change_scene", new_scene)
-
-	# Uses process to handle the loading, so it won't block main thread
-	# if (state == OK):
-	# 	call_deferred("set_process", true)
 

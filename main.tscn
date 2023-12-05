@@ -16,4 +16,5 @@ grow_vertical = 2
 [node name="MainMenu" parent="ScenePlaceholder" instance=ExtResource("1_2v14o")]
 
 [node name="Fading" parent="." instance=ExtResource("2_dyk1i")]
+process_mode = 3
 visible = false
