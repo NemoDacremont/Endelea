@@ -50,7 +50,7 @@ position = Vector2(-119, 8)
 scale = Vector2(3, 3)
 
 [node name="Coin" parent="Level" instance=ExtResource("6_7xokk")]
-position = Vector2(1972, 177)
+position = Vector2(1972, 294)
 scale = Vector2(3, 3)
 
 [node name="FirstPlayerPosition" type="Marker2D" parent="Level"]
