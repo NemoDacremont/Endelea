@@ -119,7 +119,7 @@ func background_process():
 	coyote_jump.physics_process()
 
 
-# When the buffered action is triggered, stop the timer so it won't interfere with next jumps
+# When the buffered action is triggered, stop the timer so it won't interfere with next jumpsjump.gd
 func stop_buffer_timer():
 	jump_buffer_timer.stop()
 

@@ -14,6 +14,13 @@ static var wall_jump_state: Wall_Jump_State = Wall_Jump_State.NONE
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 
+
+@onready var ray_cast_buffer_left: RayCast2D = $RayCastBufferLeft
+@onready var ray_cast_buffer_right: RayCast2D = $RayCastBufferRight
+@onready var ray_cast_buffer_bottom: RayCast2D = $RayCastBufferBottom
+
+@onready var buffer_timer: Timer = $BufferTimer
+
 var wall_jump_direction: Vector2 = Vector2.UP
 
 
@@ -91,8 +98,19 @@ func process(delta: float, player: CharacterBody2D):
 
 
 func background_process():
-	pass
+	if (state_machine.get_buffer_state() == state_machine.States.JUMP):
+		if (not ray_cast_buffer_bottom.is_colliding()):
+			if (ray_cast_left.is_colliding() or ray_cast_right.is_colliding()):
+				state_machine.buffer_state(state_machine.States.WALL_JUMP)
+				buffer_timer.start()
 
 
 
+func stop_buffer_timer():
+	buffer_timer.stop()
+
+
+
+func _on_buffer_timer_timeout():
+	state_machine.clear_buffer(state_machine.States.WALL_JUMP)
 

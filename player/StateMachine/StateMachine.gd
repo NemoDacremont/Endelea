@@ -48,6 +48,10 @@ func buffer_state(_state: States):
 	state_buffer = _state
 
 
+func get_buffer_state():
+	return state_buffer
+
+
 func clear_buffer(state_to_clear: States):
 	if (state_buffer == state_to_clear):
 		state_buffer = States.IDLE

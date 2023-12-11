@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://b57sr0tds5iub"]
+[gd_scene load_steps=76 format=3 uid="uid://b57sr0tds5iub"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_gocl4"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="2_eo2si"]
@@ -20,8 +20,10 @@
 [ext_resource type="Script" path="res://player/StateMachine/Dash/Dashing.gd" id="16_p0yi8"]
 [ext_resource type="Script" path="res://player/StateMachine/Dash/PreDash.gd" id="17_8n5v1"]
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJump.gd" id="18_dbsn6"]
+[ext_resource type="Script" path="res://player/RayCastBufferLeft.gd" id="19_mfeqs"]
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/PreWallJump.gd" id="19_nqwwj"]
 [ext_resource type="Script" path="res://player/CollisionShape2D.gd" id="19_y3vjd"]
+[ext_resource type="Script" path="res://player/RayCastBufferRight.gd" id="20_4oqjy"]
 [ext_resource type="Texture2D" uid="uid://b310gy5nssllk" path="res://assets/player/dash_particle.png" id="20_xy43d"]
 [ext_resource type="Script" path="res://player/StateMachine/WallJump/WallJumping.gd" id="20_y8us7"]
 [ext_resource type="Script" path="res://player/RayCastRight.gd" id="21_m05n1"]
@@ -617,6 +619,20 @@ target_position = Vector2(-20, 0)
 collide_with_areas = true
 script = ExtResource("22_gsgl6")
 
+[node name="RayCastBufferLeft" type="RayCast2D" parent="StateMachine/WallJump"]
+target_position = Vector2(-50, 0)
+script = ExtResource("19_mfeqs")
+
+[node name="RayCastBufferRight" type="RayCast2D" parent="StateMachine/WallJump"]
+target_position = Vector2(50, 0)
+script = ExtResource("20_4oqjy")
+
+[node name="RayCastBufferBottom" type="RayCast2D" parent="StateMachine/WallJump"]
+script = ExtResource("20_4oqjy")
+
+[node name="BufferTimer" type="Timer" parent="StateMachine/WallJump"]
+wait_time = 0.2
+
 [node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
@@ -641,7 +657,7 @@ libraries = {
 process_mode = 3
 material = SubResource("ShaderMaterial_8pxm4")
 sprite_frames = SubResource("SpriteFrames_k4dxl")
-animation = &"Idle"
+animation = &"Jump"
 autoplay = "Idle"
 flip_h = true
 
@@ -650,3 +666,4 @@ flip_h = true
 [connection signal="timeout" from="StateMachine/Jump/JumpBufferTimer" to="StateMachine/Jump" method="_on_jump_buffer_timer_timeout"]
 [connection signal="reset_dash" from="StateMachine/Dash" to="StateMachine/Dash" method="_on_reset_dash"]
 [connection signal="timeout" from="StateMachine/WallJump/WallJumpTimer" to="StateMachine/WallJump/WallJumping" method="_on_wall_jump_timer_timeout"]
+[connection signal="timeout" from="StateMachine/WallJump/BufferTimer" to="StateMachine/WallJump" method="_on_buffer_timer_timeout"]

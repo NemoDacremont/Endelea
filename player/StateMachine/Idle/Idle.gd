@@ -123,6 +123,8 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 
 	if (player.is_on_floor() or player.is_on_wall()):
 		PlayerConstants.AIR_FRICTION_X = PlayerConstants.AIR_FRICTION_X_DEFAULT
+		PlayerConstants.MAX_SPEED_X = PlayerConstants.MAX_SPEED_X_DEFAULT
+
 
 	# Update run force direction
 	movement_direction = 0
@@ -133,6 +135,7 @@ func physics_process(delta: float, player: CharacterBody2D) -> void:
 		movement_direction = -1
 
 	# Update forces
+	PlayerConstants.ACCEL_X = PlayerConstants.MAX_SPEED_X * PlayerConstants.AIR_FRICTION_X
 	run_force = movement_direction * PlayerConstants.ACCEL_X * Vector2.RIGHT
 
 	air_friction_force.x = - PlayerConstants.AIR_FRICTION_X * player.velocity.x
