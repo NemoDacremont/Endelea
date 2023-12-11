@@ -11,6 +11,8 @@ var taken: bool = false
 func _ready():
 	animation_player.play(IDLE_ANIMATION_NAME)
 	taken = false
+	$GPUParticles2D.emitting = false
+	$Sprite.speed_scale = 1
 	# $Sprite.position = Vector2.ZERO
 
 
@@ -24,7 +26,6 @@ func fades_out(duration: float) -> void:
 
 func change_alpha(alpha: float) -> void:
 	$Sprite.material.set_shader_parameter("alpha", alpha)
-	print(alpha)
 	
 	
 
