@@ -119,8 +119,8 @@ func background_process():
 
 func _on_reset_dash():
 	## Reset only when not currently dashing, so you can't double dash from the ground
-	if (dash_state == Dash_State.NONE):
-		dash_counter = 0
+	# if (dash_state == Dash_State.NONE):
+	dash_counter = 0
 
 
 
